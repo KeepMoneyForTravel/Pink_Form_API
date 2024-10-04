@@ -51,3 +51,56 @@ export class LoginDto {
     @IsString()
     password: string;
   }
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+@Entity('usernamepink') 
+export class UserNamePink {
+  @PrimaryGeneratedColumn()
+  username: string; 
+
+  @Column()
+  usrpasswrd: string; 
+
+  @Column()
+  usrpasswrd2: string; 
+
+  @Column()
+  grpcode: string; 
+
+  @Column()
+  meiosysuser: string; 
+
+  @Column()
+  meiosyspassword: string; 
+
+  @Column()
+  certserialno: string; 
+
+  @Column()
+  certserialno2013: string; 
+
+  @Column()
+  syscfgcode: string; 
+
+  @Column()
+  strucver: string; 
+
+  @Column()
+  fldchk: string; 
+
+  @Column()
+  progver: string; 
+
+  @Column()
+  usrname: string; 
+
+  @Column()
+  update_dd: string; 
+
+  @Column()
+  update_tt: string; 
+
+}

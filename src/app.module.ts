@@ -1,9 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { SubjectController } from './subject/subject.controller';
-import { SubjectModule } from './subject/subject.module';
-import { TeacherModule } from './teacher/teacher.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
@@ -16,8 +13,6 @@ import { JwtModule } from '@nestjs/jwt';
       isGlobal: true,
     }),
     AuthModule,
-    SubjectModule,
-    TeacherModule,
     UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -25,14 +20,14 @@ import { JwtModule } from '@nestjs/jwt';
       port: 3306,
       username: 'root',
       password: '',
-      database: 'testnest',
+      database: 'tulip_pinkform',
       entities: [],
       synchronize: true,
       autoLoadEntities: true,
     }),
     AuthModule,
   ],
-  controllers: [AppController, SubjectController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {

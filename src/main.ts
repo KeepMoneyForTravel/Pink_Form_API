@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   dotenv.config();
   const config = new DocumentBuilder()
-    .setTitle('TestNestJS')
+    .setTitle('DDC_PINK_FROM')
     .setDescription('Definition format used to describe RESTful APIs.')
     .setVersion('1.0')
     .build();
