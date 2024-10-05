@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, MoreThan } from 'typeorm';
-import { Auth, User, UserNamePink } from './entities/user.entity';
+import { Auth, CompanyStat, User, UserNamePink } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -73,6 +73,37 @@ export class UsersService {
     `;
     const users = await this.usersRepository.query(query);
     return users.length > 0 ? users : [];
+  }
+
+  async GetAllUserGrpPink(): Promise<UserNamePink[] | []> {
+    const query = `
+      SELECT grpcode,grpname,usrname 
+      FROM usergrppink  
+      ORDER BY grpcode ASC
+    `;
+    const res = await this.usersRepository.query(query);
+    return res.length > 0 ? res : [];
+  }
+
+  async GetLikeUserGrpPink(WordLike: string): Promise<UserNamePink[] | []> {
+    const query = `
+      SELECT grpcode,grpname,usrname 
+      FROM usergrppink 
+      WHERE grpcode LIKE '${WordLike}%' ORDER BY grpcode ASC
+    `;
+    const res = await this.usersRepository.query(query);
+    return res.length > 0 ? res : [];
+  }
+  
+  async GetCompStat(User: string): Promise<CompanyStat[] | []> {
+    const query = `
+    SELECT u.comcode, c.ename , c.tname, u.isright AS status
+    FROM _usrgrantpink u
+    JOIN _companypink c ON u.comcode = c.comcode
+    WHERE u.usr_name = '${User}';
+    `;
+    const res = await this.usersRepository.query(query);
+    return res.length > 0 ? res : [];
   }
 
 }

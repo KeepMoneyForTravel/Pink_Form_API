@@ -6,7 +6,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 
 @ApiTags('Users')
-@Controller('users')
+@Controller('Users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
@@ -55,16 +55,44 @@ export class UsersController {
   //   return this.usersService.remove(+id);
   // }
 
-  @Get('usernamepink/:WordLike')
-    async findAll(@Param('WordLike') WordLike: string) {
+  @Get('UserNamePink/:WordLike')
+    async IGetUserNamePink(@Param('WordLike') WordLike: string) {
     try {
       if(WordLike == 'SELECTALL'){
-        const users = await this.usersService.GetAllUserNamePink();
-        return users;
+        const res = await this.usersService.GetAllUserNamePink();
+        return res;
       } else {
-        const users = await this.usersService.GetLikeUserNamePink(WordLike);
-        return users;
+        const res = await this.usersService.GetLikeUserNamePink(WordLike);
+        return res;
       }
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      throw new HttpException('Error fetching users: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @Get('UserGrpPink/:WordLike')
+    async IGetUserGrpPink(@Param('WordLike') WordLike: string) {
+    try {
+      if(WordLike == 'SELECTALL'){
+        const res = await this.usersService.GetAllUserGrpPink();
+        return res;
+      } else {
+        const res = await this.usersService.GetLikeUserGrpPink(WordLike);
+        return res;
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      throw new HttpException('Error fetching users: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @Get('CompStat/:User')
+    async IGetCompStat(@Param('User') User: string) {
+    try {
+        const res = await this.usersService.GetCompStat(User);
+        return res;
+      
     } catch (error) {
       console.error('Error fetching users:', error);
       throw new HttpException('Error fetching users: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
