@@ -1,15 +1,18 @@
 import { Entity, PrimaryColumn, Column } from 'typeorm';
 
-@Entity('province')
-export class Province {
-  @PrimaryColumn({ type: 'char', length: 2, charset: 'tis620', collation: 'tis620_bin' })
-  provcode: string;
+@Entity('district')
+export class District {
+  @PrimaryColumn({ type: 'char', length: 6, charset: 'tis620', collation: 'tis620_bin' })
+  code: string;
 
-  @Column({ type: 'char', length: 70, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
-  desc1?: string;
+  @Column({ type: 'char', length: 4, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
+  subprovc?: string;
 
-  @Column({ type: 'char', length: 70, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
-  descen?: string;
+  @Column({ type: 'char', length: 100, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
+  name?: string;
+
+  @Column({ type: 'char', length: 100, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
+  nameth?: string;
 
   @Column({ type: 'char', length: 30, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
   progver?: string;

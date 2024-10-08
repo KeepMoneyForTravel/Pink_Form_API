@@ -1,30 +1,18 @@
 import { Entity, PrimaryColumn, Column } from 'typeorm';
 
-@Entity('country')
-export class Country {
+@Entity('unitpack')
+export class UnitPack {
   @PrimaryColumn({ type: 'char', length: 2, charset: 'tis620', collation: 'tis620_bin' })
   code: string;
 
-  @Column({ type: 'char', length: 3, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
-  code2?: string;
+  @Column({ type: 'char', length: 100, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
+  longname?: string;
 
-  @Column({ type: 'char', length: 3, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
-  code3?: string;
-
-  @Column({ type: 'char', length: 35, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
+  @Column({ type: 'char', length: 100, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
   name?: string;
 
-  @Column({ type: 'char', length: 35, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
-  name1?: string;
-
-  @Column({ type: 'char', length: 35, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
+  @Column({ type: 'char', length: 100, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
   name2?: string;
-
-  @Column({ type: 'char', length: 3, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
-  currency?: string;
-
-  @Column({ type: 'char', length: 1, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
-  wtocountry?: string;
 
   @Column({ type: 'char', length: 8, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
   startdate?: string;

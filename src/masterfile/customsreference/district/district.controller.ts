@@ -1,17 +1,16 @@
 import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ProvinceService } from './province.service';
+import { DistrictService } from './district.service';
 
 @ApiTags('Master File (Custom Reference)')
-@Controller('province')
-export class ProvinceController {
-    constructor(private readonly provinceService: ProvinceService) { }
-    @Get('Province')
-    async IGetProvince() {
+@Controller('district')
+export class DistrictController {
+    constructor(private readonly districtService: DistrictService) { }
+    @Get('District')
+    async IGetDistrict() {
     try {
-        const res = await this.provinceService.GetProvince();
+        const res = await this.districtService.GetDistrict();
         return res;
-      
     } catch (error) {
       console.error('Error fetching Exporter', error);
       throw new HttpException('Error fetching Exporter ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);

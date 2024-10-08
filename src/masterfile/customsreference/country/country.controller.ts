@@ -1,4 +1,21 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { CountryService } from './country.service';
 
+@ApiTags('Master File (Custom Reference)')
 @Controller('country')
-export class CountryController {}
+export class CountryController {
+    constructor(private readonly countryService: CountryService) { }
+    @Get('Country')
+    async IGetCountry() {
+    try {
+        const res = await this.countryService.GetCountry();
+        return res;
+      
+    } catch (error) {
+      console.error('Error fetching Exporter', error);
+      throw new HttpException('Error fetching Exporter ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+  }
+}
