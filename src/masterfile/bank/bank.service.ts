@@ -13,4 +13,38 @@ export class BankService {
       async GetBank(): Promise<Bank[] | []> {
         return await this.bankRepository.find();
       }
+
+      async getBankByOne(obj: Bank): Promise<Bank> {
+        try {
+          const bankcode = obj.bankcode
+          const foundBank = await this.bankRepository.findOne({
+            where: {
+              bankcode: bankcode
+            },
+          });
+          if (!foundBank) {
+            return null
+          }
+          return foundBank;
+        } catch (error) {
+          console.error('Error fetching bank:', error);
+          throw new Error(error.message);
+        }
+      }
+      async UpdateBank(obj: Bank, objold: Bank): Promise<Bank> {
+        Object.keys(obj).forEach((key) => {
+          if (obj[key] !== null && obj[key] !== undefined) {
+            (objold as any)[key] = obj[key];
+          }
+        });
+        return await this.bankRepository.save(objold);
+      }
+      async insertBank(obj: Bank): Promise<Bank> {
+        try {
+          const newBank = this.bankRepository.create(obj);
+          return await this.bankRepository.save(newBank);
+        } catch (error) {
+          throw new Error('Error inserting new bank: ' + error.message);
+        }
+      }
 }

@@ -13,4 +13,11 @@ export class CountryService {
       async GetCountry(): Promise<Country[] | []> {
         return await this.countryRepository.find();
       }
+      async getCountryPerPage(page: number, limit: number): Promise<Country[]> {
+        const offset = (page - 1) * limit;
+        return await this.countryRepository.find({
+          take: limit,
+          skip: offset,
+        });
+      }
 }

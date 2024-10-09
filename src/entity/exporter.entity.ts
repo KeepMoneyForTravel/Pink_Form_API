@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, Index } from 'typeorm';
 
 @Entity('exporter')
 @Index('PK_EXPORTER', ['comcode', 'code'], { unique: true })

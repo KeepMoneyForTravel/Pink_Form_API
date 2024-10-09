@@ -6,14 +6,14 @@ import { CurrencyService } from './currency.service';
 @Controller('currency')
 export class CurrencyController {
     constructor(private readonly currencyService: CurrencyService) { }
-    @Get('Currency')
+    @Get('GetCurrency')
     async IGetCurrency () {
     try {
         const res = await this.currencyService.GetCurrency ();
         return res;
     } catch (error) {
-      console.error('Error fetching Exporter', error);
-      throw new HttpException('Error fetching Exporter ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 }

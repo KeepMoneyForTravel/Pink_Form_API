@@ -6,14 +6,14 @@ import { SubprovinceService } from './subprovince.service';
 @Controller('subprovince')
 export class SubprovinceController {
     constructor(private readonly subprovinceService: SubprovinceService) { }
-    @Get('Subprovince')
+    @Get('GetSubprovince')
     async IGetProvince() {
     try {
         const res = await this.subprovinceService.GetSubprovince();
         return res;
     } catch (error) {
-      console.error('Error fetching Exporter', error);
-      throw new HttpException('Error fetching Exporter ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 }

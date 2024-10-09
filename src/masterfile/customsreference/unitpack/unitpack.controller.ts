@@ -7,14 +7,14 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('unitpack')
 export class UnitpackController {
     constructor(private readonly unitpackService: UnitpackService) { }
-    @Get('Unitpack')
+    @Get('GetUnitpack')
     async IGetUnitpack () {
     try {
         const res = await this.unitpackService.GetUnitPack();
         return res;
     } catch (error) {
-      console.error('Error fetching Exporter', error);
-      throw new HttpException('Error fetching Exporter ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 }

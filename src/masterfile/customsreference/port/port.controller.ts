@@ -6,14 +6,14 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('port')
 export class PortController {
     constructor(private readonly portService: PortService) { }
-    @Get('Port')
+    @Get('GetPort')
     async IGetPort () {
     try {
         const res = await this.portService.GetPort ();
         return res;
     } catch (error) {
-      console.error('Error fetching Exporter', error);
-      throw new HttpException('Error fetching Exporter ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 }

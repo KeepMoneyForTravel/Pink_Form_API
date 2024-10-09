@@ -5,7 +5,7 @@ import { ConsigneeService } from './consignee.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Consignee])], 
+    imports: [TypeOrmModule.forFeature([Consignee])],
     providers: [ConsigneeService],
     controllers: [ConsigneeController],
     exports: [ConsigneeService],
