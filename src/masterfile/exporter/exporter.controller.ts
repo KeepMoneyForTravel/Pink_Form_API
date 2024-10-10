@@ -7,10 +7,10 @@ import { Exporter } from 'src/entity/exporter.entity';
 @Controller('exporter')
 export class ExporterController {
     constructor(private readonly exporterService: ExporterService) { }
-    @Get('GetExporter')
-    async IGetExporter() {
+    @Get('GetExporter/:comcode')
+    async IGetExporter(@Param('comcode') comcode: string) {
         try {
-            const res = await this.exporterService.GetExporter();
+            const res = await this.exporterService.GetExporter(comcode);
             return res;
         } catch (error) {
             console.error('Error Not Found', error);

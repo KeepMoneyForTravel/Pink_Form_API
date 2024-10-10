@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Patch } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AccnoService } from './accno.service';
 import { Accno } from 'src/entity/accno.entity';
@@ -7,10 +7,10 @@ import { Accno } from 'src/entity/accno.entity';
 @Controller('accno')
 export class AccnoController {
     constructor(private readonly accnoService: AccnoService) { }
-    @Get('GetAccno')
-    async IGetAccno() {
+    @Get('GetAccno/:comcode')
+    async IGetAccno(@Param('comcode') comcode: string) {
     try {
-        const res = await this.accnoService.GetAccno();
+        const res = await this.accnoService.GetAccno(comcode);
         return res;
       
     } catch (error) {

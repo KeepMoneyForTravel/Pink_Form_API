@@ -10,8 +10,14 @@ export class AuthoService {
     private authoRepository: Repository<Autho>,
   ) {}
 
-  async GetAllAutho(): Promise<Autho[]> {
-    return await this.authoRepository.find();
+  async GetAllAutho(comcode: string): Promise<Autho[]> {
+    return await this.authoRepository.find(
+      {
+        where: {
+          comcode: comcode
+        }
+      }
+    );
   }
   async getAuthoByOne(obj: Autho): Promise<Autho> {
     try {

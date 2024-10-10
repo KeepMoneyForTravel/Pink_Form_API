@@ -10,8 +10,14 @@ export class ProductPinkService {
     private productPinkService: Repository<ProductPink>,
   ) {}
 
-  async getAllProductPink(): Promise<ProductPink[]> {
-    return await this.productPinkService.find();
+  async getAllProductPink(comcode: string): Promise<ProductPink[]> {
+    return await this.productPinkService.find(
+      {
+        where: {
+          comcode: comcode
+        }
+      }
+    );
   }
 
   async getProductPinkByOne(obj: ProductPink): Promise<ProductPink> {

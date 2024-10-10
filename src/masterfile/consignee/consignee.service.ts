@@ -9,8 +9,14 @@ export class ConsigneeService {
     @InjectRepository(Consignee)
     private consigneeRepository: Repository<Consignee>,
   ) { }
-  async GetConsignee(): Promise<Consignee[] | []> {
-    return await this.consigneeRepository.find();
+  async GetConsignee(comcode: string): Promise<Consignee[] | []> {
+    return await this.consigneeRepository.find(
+      {
+        where: {
+          comcode: comcode
+        }
+      }
+    );
   }
   async getSuggestionByCode(code: string): Promise<Consignee[]> {
     return await this.consigneeRepository.find({

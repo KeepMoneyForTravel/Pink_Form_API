@@ -10,8 +10,14 @@ export class AccnoService {
         private accnoRepository: Repository<Accno>,
       ) {}
 
-      async GetAccno(): Promise<Accno[] | []> {
-        return await this.accnoRepository.find();
+      async GetAccno(comcode: string): Promise<Accno[] | []> {
+        return await this.accnoRepository.find(
+          {
+            where: {
+              comcode: comcode
+            }
+          }
+        );
       }
       async getAccnoByOne(obj: Accno): Promise<Accno> {
         try {

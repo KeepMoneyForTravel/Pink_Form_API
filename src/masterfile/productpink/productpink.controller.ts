@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Patch } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch } from '@nestjs/common';
 import { ProductPinkService } from './productpink.service';
 import { ProductPink } from 'src/entity/productpink.entity';
 import { ApiTags } from '@nestjs/swagger';
@@ -8,11 +8,11 @@ import { ApiTags } from '@nestjs/swagger';
 export class ProductPinkController {
   constructor(private readonly productPinkService: ProductPinkService) {}
 
-  @Get('GetProductPink')
-  async getAllProductPink(): Promise<ProductPink[]> {
-    return this.productPinkService.getAllProductPink();
+  @Get('GetProductPink/:comcode')
+  async getAllProductPink(@Param('comcode') comcode: string): Promise<ProductPink[]> {
+    return this.productPinkService.getAllProductPink(comcode);
   }
-  @Patch('UpdateOrInsertExporter')
+  @Patch('UpdateOrInsertProductPink')
     async IUpdateOrInsertProductPink(@Body() obj : ProductPink) {
         try {
             const foundProductPink = await this.productPinkService.getProductPinkByOne(obj); 

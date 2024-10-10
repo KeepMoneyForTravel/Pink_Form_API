@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Patch } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthoService } from './autho.service';
 import { Autho } from 'src/entity/autho.entity';
@@ -7,10 +7,10 @@ import { Autho } from 'src/entity/autho.entity';
 @Controller('autho')
 export class AuthoController {
     constructor(private readonly authoService: AuthoService) { }
-    @Get('GetAutho')
-    async IGetAutho() {
+    @Get('GetAutho/:comcode')
+    async IGetAutho(@Param('comcode') comcode: string) {
         try {
-            const res = await this.authoService.GetAllAutho();
+            const res = await this.authoService.GetAllAutho(comcode);
             return res;
           
         } catch (error) {

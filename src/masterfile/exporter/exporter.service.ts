@@ -9,8 +9,14 @@ export class ExporterService {
     @InjectRepository(Exporter)
     private exporterRepository: Repository<Exporter>,
   ) { }
-  async GetExporter(): Promise<Exporter[] | []> {
-    return await this.exporterRepository.find();
+  async GetExporter(comcode: string): Promise<Exporter[] | []> {
+    return await this.exporterRepository.find(
+      {
+        where: {
+          comcode: comcode
+        }
+      }
+    );
   }
   async getExporterByOne(obj: Exporter): Promise<Exporter> {
     try {

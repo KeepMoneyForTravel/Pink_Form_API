@@ -7,10 +7,10 @@ import { Consignee } from 'src/entity/consignee.entity';
 @Controller('consignee')
 export class ConsigneeController {
   constructor(private readonly consigneeService: ConsigneeService) { }
-  @Get('Consignee')
-  async IGetConsignee() {
+  @Get('Consignee/:comcode')
+  async IGetConsignee(comcode: string) {
     try {
-      const res = await this.consigneeService.GetConsignee();
+      const res = await this.consigneeService.GetConsignee(comcode);
       return res;
     } catch (error) {
       console.error('Error Not Found', error);
