@@ -1,7 +1,8 @@
-import { Controller, Get, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UnitqtyService } from './unitqty.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
+import { Unitqty } from 'src/entity/customsreference/unitqty.entity';
 
 @UseGuards(JwtAuthGuard)
 @ApiTags('Master File (Custom Reference)')
@@ -18,4 +19,20 @@ export class UnitqtyController {
       throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+@Patch('UpdateOrInsertUnitqty')
+    async IUpdateOrInsertUnitqty(@Body() obj : Unitqty) {
+        try {
+            const foundUnitqty = await this.unitqtyService.getUnitqtyByOne(obj); 
+            if(foundUnitqty != null){
+              const res = await this.unitqtyService.UpdateUnitqty(obj , foundUnitqty); 
+              return res;
+            }else{
+              const res = await this.unitqtyService.insertUnitqty(obj); 
+              return res;
+            }
+        } catch (error) {
+            console.error('Error Not Found', error);
+            throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

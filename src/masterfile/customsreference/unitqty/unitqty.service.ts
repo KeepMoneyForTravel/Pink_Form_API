@@ -13,4 +13,38 @@ export class UnitqtyService {
       async GetUnitqty(): Promise<Unitqty[] | []> {
         return await this.unitqtyRepository.find();
       }
+
+      async getUnitqtyByOne(obj: Unitqty): Promise<Unitqty> {
+        try {
+          const code = obj.code
+          const foundUnitqty = await this.unitqtyRepository.findOne({
+            where: {
+              code: code
+            },
+          });
+          if (!foundUnitqty) {
+            return null
+          }
+          return foundUnitqty;
+        } catch (error) {
+          console.error('Error fetching unitqty:', error);
+          throw new Error(error.message);
+        }
+      }
+      async UpdateUnitqty(obj: Unitqty, objold: Unitqty): Promise<Unitqty> {
+        Object.keys(obj).forEach((key) => {
+          if (obj[key] !== null && obj[key] !== undefined) {
+            (objold as any)[key] = obj[key];
+          }
+        });
+        return await this.unitqtyRepository.save(objold);
+      }
+      async insertUnitqty(obj: Unitqty): Promise<Unitqty> {
+        try {
+          const newUnitqty = this.unitqtyRepository.create(obj);
+          return await this.unitqtyRepository.save(newUnitqty);
+        } catch (error) {
+          throw new Error('Error inserting new unitqty: ' + error.message);
+        }
+      }
 }
