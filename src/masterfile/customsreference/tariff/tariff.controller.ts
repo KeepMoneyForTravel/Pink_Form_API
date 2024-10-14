@@ -1,7 +1,9 @@
-import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { TariffService } from './tariff.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Master File (Custom Reference)')
 @Controller('tariff')
 export class TariffController {

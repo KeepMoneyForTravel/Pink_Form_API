@@ -1,8 +1,10 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Patch } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AnnounceService } from './announce.service';
 import { Announce } from 'src/entity/announce.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Master File (Company Reference)')
 @Controller('announce')
 export class AnnounceController {

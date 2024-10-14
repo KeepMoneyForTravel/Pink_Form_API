@@ -8,9 +8,10 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
   dotenv.config();
   const config = new DocumentBuilder()
-    .setTitle('DDC_PINK_FROM')
-    .setDescription('Definition format used to describe RESTful APIs.')
+    .setTitle('API DDC.PINK.FROM')
+    .setDescription('BY Meiosys')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

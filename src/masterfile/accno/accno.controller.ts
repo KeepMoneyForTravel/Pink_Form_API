@@ -1,8 +1,10 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AccnoService } from './accno.service';
 import { Accno } from 'src/entity/accno.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Master File (Company Reference)')
 @Controller('accno')
 export class AccnoController {

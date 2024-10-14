@@ -1,8 +1,10 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ProductPinkService } from './productpink.service';
 import { ProductPink } from 'src/entity/productpink.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Master File (Company Reference)')
 @Controller('productpink')
 export class ProductPinkController {

@@ -1,8 +1,10 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ConsigneeService } from './consignee.service';
 import { Consignee } from 'src/entity/consignee.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Master File (Company Reference)')
 @Controller('consignee')
 export class ConsigneeController {
@@ -28,7 +30,7 @@ export class ConsigneeController {
   //   }
   // }
   @Patch('UpdateOrInsertConsignee')
-  async IUpdateOrInsertExporter(@Body() obj: Consignee) {
+  async IUpdateOrInsertConsignee(@Body() obj: Consignee) {
     try {
       const foundConsignee = await this.consigneeService.getConsigneeByOne(obj);
       if (foundConsignee != null) {

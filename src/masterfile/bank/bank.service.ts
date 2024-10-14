@@ -22,6 +22,8 @@ export class BankService {
               bankcode: bankcode
             },
           });
+          console.log(foundBank);
+          
           if (!foundBank) {
             return null
           }

@@ -30,6 +30,8 @@ import { StatcodeModule } from './masterfile/customsreference/statcode/statcode.
 import { UnitqtyService } from './masterfile/customsreference/unitqty/unitqty.service';
 import { UnitqtyController } from './masterfile/customsreference/unitqty/unitqty.controller';
 import { UnitqtyModule } from './masterfile/customsreference/unitqty/unitqty.module';
+import { UserService } from './user/user.service';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -62,7 +64,8 @@ import { UnitqtyModule } from './masterfile/customsreference/unitqty/unitqty.mod
     CurrencyModule,
     TariffModule,
     StatcodeModule,
-    UnitqtyModule
+    UnitqtyModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],

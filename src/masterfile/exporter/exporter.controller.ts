@@ -1,7 +1,9 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ExporterService } from './exporter.service';
 import { Exporter } from 'src/entity/exporter.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
+
 
 @ApiTags('Master File (Company Reference)')
 @Controller('exporter')
