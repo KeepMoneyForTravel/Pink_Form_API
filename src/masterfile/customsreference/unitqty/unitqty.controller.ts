@@ -10,7 +10,7 @@ import { Unitqty } from 'src/entity/customsreference/unitqty.entity';
 export class UnitqtyController {
     constructor(private readonly unitqtyService: UnitqtyService) { }
     @Get('GetUnitqty')
-    async IGetUnitqty () {
+    async IGetUnitqty () { 
     try {
         const res = await this.unitqtyService.GetUnitqty ();
         return res;
