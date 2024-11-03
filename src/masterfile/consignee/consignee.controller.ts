@@ -10,7 +10,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
 export class ConsigneeController {
   constructor(private readonly consigneeService: ConsigneeService) { }
   @Get('Consignee/:comcode')
-  async IGetConsignee(comcode: string) {
+  async IGetConsignee(@Param('comcode') comcode: string) {
     try {
       const res = await this.consigneeService.GetConsignee(comcode);
       return res;

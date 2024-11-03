@@ -1,13 +1,20 @@
-import { IsOptional, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Entity, Column, PrimaryColumn, Index } from 'typeorm';
 
 @Entity('exporter')
 @Index('PK_EXPORTER', ['comcode', 'code'], { unique: true })
 export class Exporter {
+
+  @ApiProperty()
   @IsString()
+  @IsNotEmpty()
   @PrimaryColumn({ type: 'char', length: 15, charset: 'tis620', collation: 'tis620_bin' })
   comcode: string;
+
+  @ApiProperty()
   @IsString()
+  @IsNotEmpty()
   @PrimaryColumn({ type: 'char', length: 50, charset: 'tis620', collation: 'tis620_bin' })
   code: string;
 
@@ -99,15 +106,21 @@ export class Exporter {
   @Column({ type: 'char', length: 30, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   progver: string;
 
+  @ApiProperty()
   @IsOptional()
+  @IsNotEmpty()
   @Column({ type: 'char', length: 20, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   usrname: string;
 
+  @ApiProperty()
   @IsOptional()
+  @IsNotEmpty()
   @Column({ type: 'char', length: 8, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   update_dd: string;
 
+  @ApiProperty()
   @IsOptional()
+  @IsNotEmpty()
   @Column({ type: 'char', length: 9, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   update_tt: string;
 }

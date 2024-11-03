@@ -103,6 +103,10 @@ export class AuthDetail {
   refid: string;
   @Column()
   taxid: string;
+  @Column()
+  gateway: string;
+  @Column()
+  org: string;
 }
 
 @Entity()
@@ -133,6 +137,7 @@ export class LoginDto {
 
 @Entity() 
 export class ResLogin {
+
   @Column({ type: 'varchar', length: 60 }) 
   username: string;
 

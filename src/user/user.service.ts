@@ -32,7 +32,9 @@ export class UserService {
     ug.comcode, 
     cp.ename, 
     cp.refid,
-    cp.taxid
+    cp.taxid,
+    cp.gateway,
+    cp.org
     FROM 
     tulip_pinkform._usrgrantpink ug
     JOIN 
@@ -42,7 +44,6 @@ export class UserService {
     AND ug.isright = 'T';
     `;
     const grp = await this.userRepository.query(query);
-    console.log(grp);
     return grp
   }
 

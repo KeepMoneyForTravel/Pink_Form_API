@@ -1,7 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UseGuards } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Exporter } from 'src/entity/exporter.entity';
 import { Like, Repository } from 'typeorm';
+import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
+
 
 @Injectable()
 export class ExporterService {
@@ -59,5 +61,13 @@ export class ExporterService {
       where: { code: Like(`%${code}%`) },
       take: 100
     });
+  }
+
+  async deleteExporter(comcode: string, code: string): Promise<boolean> {
+    const result = await this.exporterRepository.delete({ comcode, code });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Exporter with comcode ${comcode} and code ${code} not found`);
+    }
+    return true;
   }
 }
