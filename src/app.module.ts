@@ -38,7 +38,7 @@ import { UserModule } from './user/user.module';
     AuthModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost:3306',
+      host: 'localhost',
       port: 3306,
       username: 'apitestd_pinkfrom',
       password: 'Wtf02848113',
