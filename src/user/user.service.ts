@@ -36,9 +36,9 @@ export class UserService {
     cp.gateway,
     cp.org
     FROM 
-    tulip_pinkform._usrgrantpink ug
+    apitestd_pinkfrom._usrgrantpink ug
     JOIN 
-    tulip_pinkform._companypink cp ON ug.comcode = cp.comcode
+    apitestd_pinkfrom._companypink cp ON ug.comcode = cp.comcode
     WHERE 
     ug.usr_name = '${username}' 
     AND ug.isright = 'T';
