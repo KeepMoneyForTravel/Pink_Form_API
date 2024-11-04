@@ -35,12 +35,12 @@ export class UserService {
     cp.taxid,
     cp.gateway,
     cp.org
-    FROM 
+    FROM
     apitestd_pinkfrom._usrgrantpink ug
-    JOIN 
+    JOIN
     apitestd_pinkfrom._companypink cp ON ug.comcode = cp.comcode
-    WHERE 
-    ug.usr_name = '${username}' 
+    WHERE
+    ug.usr_name = '${username}'
     AND ug.isright = 'T';
     `;
     const grp = await this.userRepository.query(query);
