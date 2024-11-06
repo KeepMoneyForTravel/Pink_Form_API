@@ -28,3 +28,20 @@ export class Subprovince {
   @Column({ type: 'char', length: 9, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
   update_tt?: string;
 }
+
+@Entity()
+export class SubprovinceJoin {
+  @Column()
+  code: string;
+  @Column()
+  name: string;
+  @Column()
+  nameth: string;
+  @Column()
+  provcode: string;
+  @Column()
+  prov_name: string;
+  @Column()
+  usrname: string;
+}
+

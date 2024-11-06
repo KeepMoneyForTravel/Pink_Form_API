@@ -14,7 +14,7 @@ export class ExporterController {
         try {
             const resexport = await this.exporterService.GetExporter(comcode);
             if (resexport.length == 0) {
-                throw new HttpException('Not Found', HttpStatus.NO_CONTENT);
+                return []
             }
             console.log(resexport);
             return resexport;

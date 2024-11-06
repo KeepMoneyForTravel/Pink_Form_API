@@ -28,3 +28,25 @@ export class District {
   @Column({ type: 'char', length: 9, nullable: true, charset: 'tis620', collation: 'tis620_bin' })
   update_tt?: string;
 }
+
+@Entity()
+export class districtJoin {
+  @Column()
+  code: string;
+  @Column()
+  name: string;
+  @Column()
+  nameth: string;
+  @Column()
+  subprovc: string;
+  @Column()
+  subp_nameth: string;
+  @Column()
+  subp_code: string;
+  @Column()
+  provcode: string;
+  @Column()
+  provname: string;
+  @Column()
+  usrname: string;
+}

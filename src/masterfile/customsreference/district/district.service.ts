@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { District } from 'src/entity/customsreference/district.entity';
+import { District, districtJoin } from 'src/entity/customsreference/district.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -45,5 +45,25 @@ export class DistrictService {
         } catch (error) {
           throw new Error('Error inserting new district: ' + error.message);
         }
+      }
+      async GetDistrictJoin(): Promise<districtJoin[]> {
+        const query = `
+        SELECT 
+        d.code
+        ,d.name
+        ,d.nameth
+        ,d.subprovc
+        ,s.nameth AS subp_nameth
+        ,s.code AS subp_code
+        ,p.provcode
+        ,p.desc1 AS provname
+        ,d.usrname 
+        FROM district AS d 
+        LEFT OUTER JOIN subprovince AS s ON d.subprovc=s.code 
+        LEFT OUTER JOIN province AS p ON s.provcode=p.provcode  
+        ORDER BY d.code ASC
+        `;
+        const grp = await this.districtRepository.query(query);
+        return grp
       }
 }

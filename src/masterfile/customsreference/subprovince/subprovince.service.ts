@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Subprovince } from 'src/entity/customsreference/subprovince.entity';
+import { Subprovince, SubprovinceJoin } from 'src/entity/customsreference/subprovince.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -45,5 +45,22 @@ export class SubprovinceService {
         } catch (error) {
           throw new Error('Error inserting new subprovince: ' + error.message);
         }
+      }
+
+      async GetSubprovinceJoin(): Promise<SubprovinceJoin[]> {
+        const query = `
+        SELECT 
+        s.code
+        ,s.name
+        ,s.nameth
+        ,s.provcode
+        ,p.desc1 AS prov_name
+        ,s.usrname 
+        FROM subprovince AS s 
+        LEFT OUTER JOIN province AS p ON s.provcode=p.provcode  
+        ORDER BY s.code ASC
+        `;
+        const grp = await this.subprovinceRepository.query(query);
+        return grp
       }
 }

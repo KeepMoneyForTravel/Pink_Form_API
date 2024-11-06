@@ -19,6 +19,16 @@ export class DistrictController {
       throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+@Get('GetDistrictJoin')
+  async IGetDistrictJoin() {
+    try {
+      const res = await this.districtService.GetDistrictJoin();
+      return res;
+    } catch (error) {
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 @Patch('UpdateOrInsertDistrict')
 async IUpdateOrInsertDistrict(@Body() obj: District) {
   try {

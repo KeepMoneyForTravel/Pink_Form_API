@@ -8,31 +8,41 @@ import { Subprovince } from 'src/entity/customsreference/subprovince.entity';
 @ApiTags('Master File (Custom Reference)')
 @Controller('subprovince')
 export class SubprovinceController {
-    constructor(private readonly subprovinceService: SubprovinceService) { }
-    @Get('GetSubprovince')
-    async IGetProvince() {
+  constructor(private readonly subprovinceService: SubprovinceService) { }
+  @Get('GetSubprovince')
+  async IGetProvince() {
     try {
-        const res = await this.subprovinceService.GetSubprovince();
-        return res;
+      const res = await this.subprovinceService.GetSubprovince();
+      return res;
     } catch (error) {
       console.error('Error Not Found', error);
       throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-}
-@Patch('UpdateOrInsertSubprovince')
-async IUpdateOrInsertSubprovince(@Body() obj: Subprovince) {
-  try {
-    const foundSubprovince = await this.subprovinceService.getSubprovinceByOne(obj);
-    if (foundSubprovince != null) {
-      const res = await this.subprovinceService.UpdateSubprovince(obj, foundSubprovince);
-      return res;
-    } else {
-      const res = await this.subprovinceService.insertSubprovince(obj);
-      return res;
-    }
-  } catch (error) {
-    console.error('Error Not Found', error);
-    throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
   }
-}
+  @Get('GetSubprovinceJoin')
+  async IGetSubprovinceJoin() {
+    try {
+      const res = await this.subprovinceService.GetSubprovinceJoin();
+      return res;
+    } catch (error) {
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  @Patch('UpdateOrInsertSubprovince')
+  async IUpdateOrInsertSubprovince(@Body() obj: Subprovince) {
+    try {
+      const foundSubprovince = await this.subprovinceService.getSubprovinceByOne(obj);
+      if (foundSubprovince != null) {
+        const res = await this.subprovinceService.UpdateSubprovince(obj, foundSubprovince);
+        return res;
+      } else {
+        const res = await this.subprovinceService.insertSubprovince(obj);
+        return res;
+      }
+    } catch (error) {
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }
