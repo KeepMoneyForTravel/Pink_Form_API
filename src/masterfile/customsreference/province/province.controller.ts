@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ProvinceService } from './province.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
@@ -36,4 +36,11 @@ export class ProvinceController {
       throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+  @Delete('DeleteProvince/:provcode')
+    @HttpCode(HttpStatus.OK)
+    async deleteProvince(
+        @Param('provcode') provcode: string,
+    ): Promise<boolean> {
+        return await this.provinceService.deleteProvince(provcode);
+    }
 }

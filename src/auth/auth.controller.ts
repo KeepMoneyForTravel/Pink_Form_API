@@ -32,8 +32,9 @@ export class AuthController {
     @Post('ping')
     async IGetPing() {
         try {
+            const currentTime = new Date().toISOString();
             return {
-                statusCode: HttpStatus.OK
+                statusCode: HttpStatus.OK,currentTime
               };
         } catch (error) {
             console.error('Error Not Found', error);

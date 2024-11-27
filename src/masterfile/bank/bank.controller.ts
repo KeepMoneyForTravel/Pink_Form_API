@@ -1,5 +1,5 @@
 
-import { Body, Controller, Get, HttpException, HttpStatus, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { BankService } from './bank.service';
 import { Bank } from 'src/entity/bank.entity';
@@ -38,5 +38,13 @@ export class BankController {
       throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  @Delete('Deletebank/:bankcode')
+    @HttpCode(HttpStatus.OK)
+    async deletebank(
+        @Param('bankcode') bankcode: string
+    ): Promise<boolean> {
+        return await this.bankService.deletebank(bankcode);
+    }
 }
 

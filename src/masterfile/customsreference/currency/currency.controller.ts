@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CurrencyService } from './currency.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
@@ -34,5 +34,12 @@ export class CurrencyController {
       console.error('Error Not Found', error);
       throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+  @Delete('DeletCurrency/:code')
+  @HttpCode(HttpStatus.OK)
+  async deletCurrency(
+    @Param('code') code: string,
+  ): Promise<boolean> {
+    return await this.currencyService.deletCurrency(code);
   }
 }

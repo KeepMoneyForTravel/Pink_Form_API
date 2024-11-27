@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Unitqty } from 'src/entity/customsreference/unitqty.entity';
 import { Repository } from 'typeorm';
@@ -46,5 +46,12 @@ export class UnitqtyService {
         } catch (error) {
           throw new Error('Error inserting new unitqty: ' + error.message);
         }
+      }
+      async deleteUnitqty(code: string): Promise<boolean> {
+        const result = await this.unitqtyRepository.delete({ code });
+        if (result.affected === 0) {
+          throw new NotFoundException(`not found`);
+        }
+        return true;
       }
 }

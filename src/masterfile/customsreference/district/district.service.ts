@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { District, districtJoin } from 'src/entity/customsreference/district.entity';
 import { Repository } from 'typeorm';
@@ -65,5 +65,13 @@ export class DistrictService {
         `;
         const grp = await this.districtRepository.query(query);
         return grp
+      }
+
+      async deleteDistrict(code: string): Promise<boolean> {
+        const result = await this.districtRepository.delete({ code });
+        if (result.affected === 0) {
+          throw new NotFoundException(`not found`);
+        }
+        return true;
       }
 }

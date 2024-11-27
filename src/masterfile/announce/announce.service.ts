@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Announce } from 'src/entity/announce.entity';
 import { Repository } from 'typeorm';
@@ -45,6 +45,13 @@ export class AnnounceService {
         } catch (error) {
           throw new Error('Error inserting new announce: ' + error.message);
         }
+      }
+      async deleteAnnounce(desc1: string): Promise<boolean> {
+        const result = await this.announceRepository.delete({ desc1 });
+        if (result.affected === 0) {
+          throw new NotFoundException(`not found`);
+        }
+        return true;
       }
 }
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UnitPack } from 'src/entity/customsreference/unitpack.entity';
 import { Repository } from 'typeorm';
@@ -46,5 +46,12 @@ export class UnitpackService {
         } catch (error) {
           throw new Error('Error inserting new unitPack: ' + error.message);
         }
+      }
+      async deleteUnitpack(code: string): Promise<boolean> {
+        const result = await this.unitPackRepository.delete({ code });
+        if (result.affected === 0) {
+          throw new NotFoundException(`not found`);
+        }
+        return true;
       }
 }

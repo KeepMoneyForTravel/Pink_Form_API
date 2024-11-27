@@ -4,7 +4,7 @@ import { ExporterService } from './exporter.service';
 import { Exporter } from 'src/entity/exporter.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
 
-@UseGuards(JwtAuthGuard)
+//@UseGuards(JwtAuthGuard)
 @ApiTags('Master File (Company Reference)')
 @Controller('exporters')
 export class ExporterController {
@@ -13,9 +13,6 @@ export class ExporterController {
     async IGetExporter(@Param('comcode') comcode: string) {
         try {
             const resexport = await this.exporterService.GetExporter(comcode);
-            if (resexport.length == 0) {
-                return []
-            }
             console.log(resexport);
             return resexport;
         } catch (error) {

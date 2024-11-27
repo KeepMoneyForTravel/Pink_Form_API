@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthoService } from './autho.service';
 import { Autho } from 'src/entity/autho.entity';
@@ -35,5 +35,13 @@ export class AuthoController {
             console.error('Error Not Found', error);
             throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @Delete('DeleteAutho/:comcode/:code')
+    @HttpCode(HttpStatus.OK)
+    async deleteAutho(
+        @Param('comcode') comcode: string,
+        @Param('code') code: string,
+    ): Promise<boolean> {
+        return await this.authoService.deleteAutho(comcode, code);
     }
 }

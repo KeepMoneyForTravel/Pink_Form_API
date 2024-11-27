@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UnitqtyService } from './unitqty.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
@@ -34,5 +34,12 @@ export class UnitqtyController {
             console.error('Error Not Found', error);
             throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @Delete('DeleteUnitqty/:code')
+    @HttpCode(HttpStatus.OK)
+    async deleteUnitqty(
+        @Param('code') code: string,
+    ): Promise<boolean> {
+        return await this.unitqtyService.deleteUnitqty(code);
     }
 }

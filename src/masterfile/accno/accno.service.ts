@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Accno } from 'src/entity/accno.entity';
 import { Repository } from 'typeorm';
@@ -53,6 +53,14 @@ export class AccnoService {
         } catch (error) {
           throw new Error('Error inserting new accno: ' + error.message);
         }
+      }
+
+      async deleteAccno(comcode: string,accno: string): Promise<boolean> {
+        const result = await this.accnoRepository.delete({ comcode , accno });
+        if (result.affected === 0) {
+          throw new NotFoundException(`not found`);
+        }
+        return true;
       }
 }
 

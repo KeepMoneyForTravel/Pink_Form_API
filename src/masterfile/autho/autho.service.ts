@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Autho } from 'src/entity/autho.entity';
 import { Repository } from 'typeorm';
@@ -53,5 +53,12 @@ export class AuthoService {
     } catch (error) {
       throw new Error('Error inserting new autho: ' + error.message);
     }
+  }
+  async deleteAutho(comcode: string,code: string): Promise<boolean> {
+    const result = await this.authoRepository.delete({ comcode , code });
+    if (result.affected === 0) {
+      throw new NotFoundException(`not found`);
+    }
+    return true;
   }
 }

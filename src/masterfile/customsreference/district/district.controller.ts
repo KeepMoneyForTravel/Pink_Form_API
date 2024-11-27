@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { DistrictService } from './district.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
@@ -45,4 +45,11 @@ async IUpdateOrInsertDistrict(@Body() obj: District) {
     throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
+@Delete('DeleteDistrict/:code')
+    @HttpCode(HttpStatus.OK)
+    async deleteDistrict(
+        @Param('code') code: string,
+    ): Promise<boolean> {
+        return await this.districtService.deleteDistrict(code);
+    }
 }

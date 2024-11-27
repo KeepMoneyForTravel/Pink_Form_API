@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Bank } from 'src/entity/bank.entity';
 import { Repository } from 'typeorm';
@@ -23,7 +23,6 @@ export class BankService {
             },
           });
           console.log(foundBank);
-          
           if (!foundBank) {
             return null
           }
@@ -48,5 +47,12 @@ export class BankService {
         } catch (error) {
           throw new Error('Error inserting new bank: ' + error.message);
         }
+      }
+      async deletebank(bankcode : string): Promise<boolean> {
+        const result = await this.bankRepository.delete({ bankcode});
+        if (result.affected === 0) {
+          throw new NotFoundException(`not found`);
+        }
+        return true;
       }
 }

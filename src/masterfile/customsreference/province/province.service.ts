@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Province } from 'src/entity/customsreference/province.entity';
 import { Repository } from 'typeorm';
@@ -45,5 +45,12 @@ export class ProvinceService {
         } catch (error) {
           throw new Error('Error inserting new province: ' + error.message);
         }
+      }
+      async deleteProvince(provcode: string): Promise<boolean> {
+        const result = await this.provinceRepository.delete({ provcode });
+        if (result.affected === 0) {
+          throw new NotFoundException(`not found`);
+        }
+        return true;
       }
 }

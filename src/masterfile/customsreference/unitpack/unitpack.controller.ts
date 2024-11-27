@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { UnitpackService } from './unitpack.service';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
@@ -35,4 +35,11 @@ async IUpdateOrInsertUnitpack(@Body() obj: UnitPack) {
     throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
+@Delete('DeleteUnitpack/:code')
+    @HttpCode(HttpStatus.OK)
+    async deleteUnitpack(
+        @Param('code') code: string,
+    ): Promise<boolean> {
+        return await this.unitpackService.deleteUnitpack(code);
+    }
 }

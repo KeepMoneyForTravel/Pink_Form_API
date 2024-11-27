@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AccnoService } from './accno.service';
 import { Accno } from 'src/entity/accno.entity';
@@ -36,5 +36,13 @@ export class AccnoController {
             console.error('Error Not Found', error);
             throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @Delete('DeleteAccno/:comcode/:accno')
+    @HttpCode(HttpStatus.OK)
+    async deleteAccno(
+        @Param('comcode') comcode: string,
+        @Param('accno') accno: string,
+    ): Promise<boolean> {
+        return await this.accnoService.deleteAccno(comcode, accno);
     }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ConsigneeService } from './consignee.service';
 import { Consignee } from 'src/entity/consignee.entity';
@@ -45,4 +45,12 @@ export class ConsigneeController {
       throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+  @Delete('DeleteConsignee/:comcode/:code')
+    @HttpCode(HttpStatus.OK)
+    async deleteConsignee(
+        @Param('comcode') comcode: string,
+        @Param('code') code: string,
+    ): Promise<boolean> {
+        return await this.consigneeService.deleteConsignee(comcode, code);
+    }
 }

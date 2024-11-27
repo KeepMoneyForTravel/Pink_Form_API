@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Patch, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, Query, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CountryService } from './country.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
@@ -36,11 +36,11 @@ export class CountryController {
       throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-  // @Get('GetCountryPerPage')
-  // async IGetCountryPerPage(
-  //   @Query('page') page: number = 1,
-  //   @Query('limit') limit: number = 100 
-  // ): Promise<Country[]> {
-  //   return this.countryService.getCountryPerPage(page, limit);
-  // }
+  @Delete('DeleteCountry/:code')
+    @HttpCode(HttpStatus.OK)
+    async deleteCountry(
+        @Param('code') code: string,
+    ): Promise<boolean> {
+        return await this.countryService.deleteCountry(code);
+    }
 }

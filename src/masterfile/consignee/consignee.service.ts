@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Consignee } from 'src/entity/consignee.entity';
 import { Like, Repository } from 'typeorm';
@@ -58,5 +58,13 @@ export class ConsigneeService {
     } catch (error) {
       throw new Error('Error inserting new consignee: ' + error.message);
     }
+  }
+
+  async deleteConsignee(comcode: string,code: string): Promise<boolean> {
+    const result = await this.consigneeRepository.delete({ comcode , code });
+    if (result.affected === 0) {
+      throw new NotFoundException(`not found`);
+    }
+    return true;
   }
 }

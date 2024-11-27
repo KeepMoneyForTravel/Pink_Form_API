@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductPink } from 'src/entity/productpink.entity';
 import { Repository } from 'typeorm';
@@ -56,5 +56,12 @@ export class ProductPinkService {
     } catch (error) {
       throw new Error('Error inserting new productPink: ' + error.message);
     }
+  }
+  async deleteproductPink(comcode: string, cust:string ,code: string): Promise<boolean> {
+    const result = await this.productPinkService.delete({ comcode, cust , code });
+    if (result.affected === 0) {
+      throw new NotFoundException(`not found`);
+    }
+    return true;
   }
 }

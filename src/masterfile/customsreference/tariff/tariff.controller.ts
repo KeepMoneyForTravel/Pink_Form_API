@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { TariffService } from './tariff.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
@@ -35,4 +35,11 @@ export class TariffController {
       throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+  @Delete('DeleteTariff/:tariffclas')
+    @HttpCode(HttpStatus.OK)
+    async deleteTariff(
+        @Param('tariffclas') tariffclas: string,
+    ): Promise<boolean> {
+        return await this.tariffService.deleteTariff(tariffclas);
+    }
 }
