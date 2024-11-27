@@ -56,7 +56,7 @@ export class CountryService {
       async deleteCountry(code: string): Promise<boolean> {
         const result = await this.countryRepository.delete({ code });
         if (result.affected === 0) {
-          throw new NotFoundException(`not found`);
+          throw new NotFoundException(`not found`); 
         }
         return true;
       }
