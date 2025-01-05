@@ -14,7 +14,6 @@ export class AccnoController {
     try {
         const res = await this.accnoService.GetAccno(comcode);
         return res;
-      
     } catch (error) {
       console.error('Error Not Found', error);
       throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);

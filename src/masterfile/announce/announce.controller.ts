@@ -37,7 +37,7 @@ export class AnnounceController {
             throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @Delete('Deleteannounce/:comcode')
+    @Delete('Deleteannounce/:desc1')
     @HttpCode(HttpStatus.OK)
     async deleteAnnounce(
         @Param('desc1') desc1: string

@@ -32,32 +32,38 @@ import { UnitqtyController } from './masterfile/customsreference/unitqty/unitqty
 import { UnitqtyModule } from './masterfile/customsreference/unitqty/unitqty.module';
 import { UserService } from './user/user.service';
 import { UserModule } from './user/user.module';
+import { PinkfromController } from './inv/pinkfrom/pinkfrom.controller';
+import { PinkfromService } from './inv/pinkfrom/pinkfrom.service';
+import { PinkfromModule } from './inv/pinkfrom/pinkfrom.module';
+import { HinvController } from './inv/hinv/hinv.controller';
+import { HinvService } from './inv/hinv/hinv.service';
+import { HinvModule } from './inv/hinv/hinv.module';
 
 @Module({
   imports: [
     AuthModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'apitestd_pinkfrom',
-      password: 'Wtf02848113',
-      database: 'apitestd_pinkfrom',
-      entities: [],
-      synchronize: true,
-      autoLoadEntities: true,
-    }),
     // TypeOrmModule.forRoot({
     //   type: 'mysql',
-    //   host: '127.0.0.1',
+    //   host: 'localhost',
     //   port: 3306,
-    //   username: 'root',
-    //   password: '1234',
-    //   database: 'tulip_pinkform',
+    //   username: 'apitestd_pinkfrom',
+    //   password: 'Wtf02848113',
+    //   database: 'apitestd_pinkfrom',
     //   entities: [],
     //   synchronize: true,
     //   autoLoadEntities: true,
     // }),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: '127.0.0.1',
+      port: 3306,
+      username: 'root',
+      password: '1234',
+      database: 'tulip_pinkform',
+      entities: [],
+      synchronize: true,
+      autoLoadEntities: true,
+    }),
     AuthModule,
     ExporterModule,
     ConsigneeModule,
@@ -76,7 +82,9 @@ import { UserModule } from './user/user.module';
     TariffModule,
     StatcodeModule,
     UnitqtyModule,
-    UserModule
+    UserModule,
+    PinkfromModule,
+    HinvModule
   ],
   controllers: [AppController],
   providers: [AppService],
