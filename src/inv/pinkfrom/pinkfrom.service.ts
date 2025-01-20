@@ -80,6 +80,25 @@ export class PinkfromService {
             throw new Error(error.message);
         }
     }
+
+    async GetPinkbyone(comcode: string, refno: string): Promise<Pinkform | null> {
+        try {
+            const foundPinkform = await this.pinkformRepository.findOne({
+                where: {
+                    comcode: comcode,
+                    refno: refno,
+                },
+            });
+            if (!foundPinkform) {
+                return null;
+            }
+            return foundPinkform;
+        } catch (error) {
+            console.error('Error fetching pinkform:', error);
+            throw new Error(error.message);
+        }
+    }
+    
     async UpdatePinkfrom(obj: Pinkform, objold: Pinkform): Promise<Pinkform> {
         Object.keys(obj).forEach((key) => {
             if (obj[key] !== null && obj[key] !== undefined) {

@@ -1,6 +1,8 @@
 import { Entity, PrimaryColumn, Column, Index, Unique } from 'typeorm';
 import { IsString, IsOptional, IsNumber, IsDate } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { PinkHinv } from './hinv.entity';
+import { PinkEinv } from './einv.entity';
 
 @Entity('pinkform')
 @Index('PK_PINKFORM', ['comcode', 'refno'], { unique: true })
@@ -420,6 +422,13 @@ export class PinkfromReq {
   @IsString()
   @IsOptional()
   refddto?: string | null;
+}
+
+
+export class InvRes {
+  pinkform: Pinkform;
+  pinkHinv: PinkHinv[] = [];
+  pinkEinv: PinkEinv[] = [];
 }
 
 

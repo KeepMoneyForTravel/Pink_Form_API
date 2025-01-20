@@ -18,7 +18,7 @@ export class HinvService {
                 where: {
                     comcode: comcode,
                     refno: refno,
-                    invno : invno
+                    invno: invno
                 },
             });
             if (!foundPinkHinv) {
@@ -30,6 +30,28 @@ export class HinvService {
             throw new Error(error.message);
         }
     }
+
+    async GetPinkHinvbyone(comcode: string, refno: string): Promise<PinkHinv[]> {
+        try {
+            const foundPinkHinv = await this.hinvRepository.find({
+                where: {
+                    comcode: comcode,
+                    refno: refno,
+                },
+            });
+    
+            if (!foundPinkHinv) {
+                return [];
+            }
+    
+            return foundPinkHinv || [];
+        } catch (error) {
+            console.error('Error fetching PinkHinv:', error);
+            throw new Error(error.message);
+        }
+    }
+    
+
     async UpdatePinkfrom(obj: PinkHinv, objold: PinkHinv): Promise<PinkHinv> {
         Object.keys(obj).forEach((key) => {
             if (obj[key] !== null && obj[key] !== undefined) {

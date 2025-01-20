@@ -1,20 +1,28 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PinkfromService } from './pinkfrom.service';
-import { Pinkform, PinkfromReq } from 'src/entity/inv/pinkfrom.entity';
+import { InvRes, Pinkform, PinkfromReq } from 'src/entity/inv/pinkfrom.entity';
 import { HinvService } from '../hinv/hinv.service';
 import { PinkfromHeadReq } from 'src/entity/inv/hinv.entity';
+import { EinvService } from '../einv/einv.service';
 
 @ApiTags('INV')
 @Controller('pinkfrom')
 export class PinkfromController {
-    constructor(private readonly pinkfromService: PinkfromService , private readonly hinvService: HinvService) { }
+    constructor(private readonly pinkfromService: PinkfromService , private readonly hinvService: HinvService, private readonly einvService: EinvService) { }
 
-    @Get('GetpinkfromStatus')
-    async IGetpinkfromStatus() {
+    @Get('GetPinkbyone/:comcode/:refno')
+    async IGetPinkbyone(@Param('comcode') comcode: string , @Param('refno') refno: string) {
         try {
-            const res = await this.pinkfromService.GetpinkfromStatus();
-            return res;
+            const res = await this.pinkfromService.GetPinkbyone(comcode, refno);
+            const res2 = await this.hinvService.GetPinkHinvbyone(comcode, refno);
+            const res3 = await this.einvService.GetPinkEinvbyone(comcode, refno);
+            const invRes: InvRes = {
+                pinkform: res, 
+                pinkHinv: res2, 
+                pinkEinv: res3,
+            };
+            return invRes;
 
         } catch (error) {
             console.error('Error Not Found', error);
