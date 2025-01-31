@@ -45,7 +45,7 @@ export class PinkfromService {
             SELECT refno 
             FROM apitestd_pinkfrom.pinkform 
             WHERE comcode = ? 
-            ORDER BY refdd DESC 
+            ORDER by refno DESC
             LIMIT 1;
             `,
             [comcode]
