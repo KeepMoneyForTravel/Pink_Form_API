@@ -24,46 +24,53 @@ export class Pinkform {
   @IsString()
   @IsOptional()
   status?: string;
+  // 'wip' '' 
+  // 'close' X lock Edit
+  // waiting W
+  // Accept A
+  // ERROR E 
 
   @Column({ type: 'char', length: 5, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   @IsString()
   @IsOptional()
   status2?: string;
 
+
+
   @Column({ type: 'char', length: 25, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   @IsString()
   @IsOptional()
-  issue_date?: string;
+  issue_date?: string; //
 
   @Column({ type: 'char', length: 1, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   @IsString()
   @IsOptional()
-  reqtype?: string;
+  reqtype?: string; //pickfrom 
 
   @Column({ type: 'char', length: 35, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   @IsString()
   @IsOptional()
-  rcvno?: string;
+  rcvno?: string; //
 
   @Column({ type: 'char', length: 35, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   @IsString()
   @IsOptional()
-  certno?: string;
+  certno?: string; //
 
   @Column({ type: 'char', length: 50, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   @IsString()
   @IsOptional()
-  com_code?: string;
+  com_code?: string; //
 
   @Column({ type: 'char', length: 17, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   @IsString()
   @IsOptional()
-  com_taxid?: string;
+  com_taxid?: string; //
 
   @Column({ type: 'char', length: 6, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   @IsString()
   @IsOptional()
-  com_branch?: string;
+  com_branch?: string; //
 
   @Column({ type: 'varchar', length: 120, charset: 'tis620', collation: 'tis620_bin', nullable: true })
   @IsString()

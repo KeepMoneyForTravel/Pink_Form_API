@@ -43,7 +43,7 @@ export class PinkfromService {
         const result = await this.pinkformRepository.query(
             `
             SELECT refno 
-            FROM tulip_pinkform.pinkform 
+            FROM apitestd_pinkfrom.pinkform 
             WHERE comcode = ? 
             ORDER BY refdd DESC 
             LIMIT 1;
