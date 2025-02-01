@@ -41,32 +41,35 @@ import { HinvModule } from './inv/hinv/hinv.module';
 import { EinvService } from './inv/einv/einv.service';
 import { EinvController } from './inv/einv/einv.controller';
 import { EinvModule } from './inv/einv/einv.module';
+import { UgpermissionsController } from './ugpermissions/ugpermissions.controller';
+import { UgpermissionsService } from './ugpermissions/ugpermissions.service';
+import { UgpermissionsModule } from './ugpermissions/ugpermissions.module';
 
 @Module({
   imports: [
     AuthModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'apitestd_pinkfrom',
-      password: 'Wtf02848113',
-      database: 'apitestd_pinkfrom',
-      entities: [],
-      synchronize: true,
-      autoLoadEntities: true,
-    }),
     // TypeOrmModule.forRoot({
     //   type: 'mysql',
-    //   host: '127.0.0.1',
+    //   host: 'localhost',
     //   port: 3306,
-    //   username: 'root',
-    //   password: '1234',
-    //   database: 'tulip_pinkform',
+    //   username: 'apitestd_pinkfrom',
+    //   password: 'Wtf02848113',
+    //   database: 'apitestd_pinkfrom',
     //   entities: [],
     //   synchronize: true,
     //   autoLoadEntities: true,
     // }),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: '127.0.0.1',
+      port: 3306,
+      username: 'root',
+      password: '1234',
+      database: 'tulip_pinkform',
+      entities: [],
+      synchronize: true,
+      autoLoadEntities: true,
+    }),
     AuthModule,
     ExporterModule,
     ConsigneeModule,
@@ -88,7 +91,8 @@ import { EinvModule } from './inv/einv/einv.module';
     UserModule,
     PinkfromModule,
     HinvModule,
-    EinvModule
+    EinvModule,
+    UgpermissionsModule
   ],
   controllers: [AppController],
   providers: [AppService],
