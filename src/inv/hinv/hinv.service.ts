@@ -9,7 +9,7 @@ export class HinvService {
         @InjectRepository(PinkHinv)
         private hinvRepository: Repository<PinkHinv>,
     ) { }
-    async getPinkfromByOne(obj: PinkHinv): Promise<PinkHinv> {
+    async getPinkHinvfromByOne(obj: PinkHinv): Promise<PinkHinv> {
         try {
             const comcode = obj.comcode
             const refno = obj.refno
@@ -52,7 +52,7 @@ export class HinvService {
     }
     
 
-    async UpdatePinkfrom(obj: PinkHinv, objold: PinkHinv): Promise<PinkHinv> {
+    async UpdatePinkHinv(obj: PinkHinv, objold: PinkHinv): Promise<PinkHinv> {
         Object.keys(obj).forEach((key) => {
             if (obj[key] !== null && obj[key] !== undefined) {
                 (objold as any)[key] = obj[key];

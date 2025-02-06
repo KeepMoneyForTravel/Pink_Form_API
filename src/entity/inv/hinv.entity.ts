@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Entity, PrimaryColumn, Column, Index, Unique } from 'typeorm';
 import { Pinkform } from './pinkfrom.entity';
 
@@ -79,11 +79,10 @@ import { Pinkform } from './pinkfrom.entity';
 
 
 export class PinkfromHeadReq {
-    @IsString()
+
     @IsOptional()
-    pinkfrom?: Pinkform | null;
+    pinkform?: Pinkform 
     
-    @IsString()
     @IsOptional()
-    pinkHinv?: PinkHinv | null;
+    pinkHinv?: PinkHinv 
 }
