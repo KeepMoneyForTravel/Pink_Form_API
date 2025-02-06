@@ -21,45 +21,45 @@ import { Pinkform } from './pinkfrom.entity';
         @Column({ type: 'char', length: 8, nullable: true, collation: 'tis620_bin', charset: 'tis620' })
         @IsString()
         @IsOptional()
-        invdate: string | null;
+        invdate?: string | null;
 
         @Column({ type: 'char', length: 5, nullable: true, collation: 'tis620_bin', charset: 'tis620' })
         @IsString()
         @IsOptional()
-        invitemno: string | null;
+        invitemno?: string | null;
 
         @Column({ type: 'char', length: 35, nullable: true, collation: 'tis620_bin', charset: 'tis620' })
-        pono: string | null;
+        pono?: string | null;
 
         @Column({ type: 'char', length: 35, nullable: true, collation: 'tis620_bin', charset: 'tis620' })
         @IsString()
         @IsOptional()
-        brand: string | null;
+        brand?: string | null;
 
         @Column({ type: 'double', nullable: true })
         @IsString()
         @IsOptional()
-        totalinv: number | null;
+        totalinv?: number | null;
 
         @Column({ type: 'char', length: 3, nullable: true, collation: 'tis620_bin', charset: 'tis620' })
         @IsString()
         @IsOptional()
-        totcurrency: string | null;
+        totcurrency?: string | null;
 
         @Column({ type: 'double', nullable: true })
         @IsString()
         @IsOptional()
-        totqty: number | null;
+        totqty?: number | null;
 
         @Column({ type: 'char', length: 3, nullable: true, collation: 'tis620_bin', charset: 'tis620' })
         @IsString()
         @IsOptional()
-        totqtyunit: string | null;
+        totqtyunit?: string | null;
 
         @Column({ type: 'char', length: 30, nullable: true, collation: 'tis620_bin', charset: 'tis620' })
         @IsString()
         @IsOptional()
-        progver: string | null;
+        progver?: string | null;
 
         @Column({ type: 'char', length: 20, nullable: true, collation: 'tis620_bin', charset: 'tis620' })
         @IsString()
