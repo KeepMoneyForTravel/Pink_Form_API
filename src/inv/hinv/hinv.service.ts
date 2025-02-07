@@ -29,6 +29,15 @@ export class HinvService {
         }
     }
 
+    async insertPinkHinv(obj: PinkHinv): Promise<PinkHinv> {
+            try {
+                const foundPinkHinv = this.hinvRepository.create(obj);
+                return await this.hinvRepository.save(foundPinkHinv);
+            } catch (error) {
+                throw new Error('Error inserting new Hinv: ' + error.message);
+            }
+        }
+
     async GetPinkHinvbyone(comcode: string, refno: string): Promise<PinkHinv[]> {
         try {
             const foundPinkHinv = await this.hinvRepository.find({

@@ -3,7 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { PinkfromService } from './pinkfrom.service';
 import { InvRes, Pinkform, PinkfromReq } from 'src/entity/inv/pinkfrom.entity';
 import { HinvService } from '../hinv/hinv.service';
-import { PinkfromHeadReq } from 'src/entity/inv/hinv.entity';
+import { PinkfromHeadReq, PinkHinv } from 'src/entity/inv/hinv.entity';
 import { EinvService } from '../einv/einv.service';
 
 @ApiTags('INV')
@@ -51,7 +51,10 @@ export class PinkfromController {
             const incrementedNumber = (parseInt(numericPart) + 1).toString().padStart(numericPart.length, '0');
             const resa = prefix + incrementedNumber;
             const pinkform = new Pinkform();
-            pinkform.comcode = comcode
+            const pinkhinv = new PinkHinv();
+            pinkhinv.comcode = comcode
+            pinkhinv.refno = resa
+            pinkhinv.invno = resa
             pinkform.refno = resa;
             const givenDate = new Date();
             const givenDatespit = givenDate.toISOString().split('T')[0];
@@ -60,7 +63,12 @@ export class PinkfromController {
             pinkform.update_tt = givenDate.toTimeString().split(' ')[0]; 
             pinkform.usrname = usr
             pinkform.update_dd = givenDatespit.split("-").join("");;
+            pinkhinv.usrname = usr
+            pinkhinv.update_dd = givenDatespit.split("-").join("");;
+            pinkhinv.comcode = comcode
             const resinsert = await this.pinkfromService.insertPinkfrom(pinkform);
+            const resinserthinv = await this.hinvService.insertPinkHinv(pinkhinv);
+            
             return resinsert;
         } catch (error) {
             console.error('Error Not Found', error);
