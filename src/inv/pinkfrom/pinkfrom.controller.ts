@@ -62,9 +62,9 @@ export class PinkfromController {
             pinkform.status = ''
             pinkform.update_tt = givenDate.toTimeString().split(' ')[0]; 
             pinkform.usrname = usr
-            pinkform.update_dd = givenDatespit.split("-").join("");;
+            pinkform.update_dd = givenDatespit.split("-").join("");
             pinkhinv.usrname = usr
-            pinkhinv.update_dd = givenDatespit.split("-").join("");;
+            pinkhinv.update_dd = givenDatespit.split("-").join("");
             pinkhinv.comcode = comcode
             const resinsert = await this.pinkfromService.insertPinkfrom(pinkform);
             const resinserthinv = await this.hinvService.insertPinkHinv(pinkhinv);
