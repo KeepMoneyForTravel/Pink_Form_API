@@ -25,7 +25,7 @@ export class HinvService {
             return foundPinkHinv;
         } catch (error) {
             console.error('Error fetching pinkHinv:', error);
-            throw new Error(error.message);
+            throw new Error(error.message); 
         }
     }
 
