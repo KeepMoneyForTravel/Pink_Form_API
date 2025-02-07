@@ -13,12 +13,10 @@ export class HinvService {
         try {
             const comcode = obj.comcode
             const refno = obj.refno
-            const invno = obj.invno
             const foundPinkHinv = await this.hinvRepository.findOne({
                 where: {
                     comcode: comcode,
-                    refno: refno,
-                    invno: invno
+                    refno: refno
                 },
             });
             if (!foundPinkHinv) {

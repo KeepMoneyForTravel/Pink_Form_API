@@ -65,12 +65,15 @@ export class PinkfromService {
         try {
             const comcode = obj.comcode
             const refno = obj.refno
+            console.log(comcode);
+            console.log(refno);
             const foundPinkform = await this.pinkformRepository.findOne({
                 where: {
                     comcode: comcode,
                     refno: refno,
                 },
             });
+            console.log(foundPinkform);
             if (!foundPinkform) {
                 return null
             }
@@ -100,11 +103,14 @@ export class PinkfromService {
     }
     
     async UpdatePinkfrom(obj: Pinkform, objold: Pinkform): Promise<Pinkform> {
+        console.log('A');
         Object.keys(obj).forEach((key) => {
             if (obj[key] !== null && obj[key] !== undefined) {
                 (objold as any)[key] = obj[key];
             }
         });
-        return await this.pinkformRepository.save(objold);
+        const A = await this.pinkformRepository.save(objold);
+        return A
+        
     }
 }

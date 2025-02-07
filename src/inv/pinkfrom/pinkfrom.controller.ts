@@ -72,14 +72,13 @@ export class PinkfromController {
         async IUpdateOrInsertPinkfrom(@Body() obj : PinkfromHeadReq) {
             try {
                 const foundPinkfrom = await this.pinkfromService.getPinkfromByOne(obj.pinkform); 
-                console.log(foundPinkfrom);
                 const respinkfrom = await this.pinkfromService.UpdatePinkfrom(obj.pinkform , foundPinkfrom); 
-                console.log(respinkfrom);
                 const foundPinkHinv = await this.hinvService.getPinkHinvfromByOne(obj.pinkHinv); 
-                console.log(foundPinkHinv);
                 const reshinv = await this.hinvService.UpdatePinkHinv(obj.pinkHinv , foundPinkHinv); 
-                console.log(reshinv);
-                return foundPinkHinv
+                return {
+                    foundPinkHinv,
+                    reshinv,
+                };
             } catch (error) {
                 console.error('Error Not Found', error);
                 throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
