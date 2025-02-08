@@ -65,8 +65,6 @@ export class PinkfromService {
         try {
             const comcode = obj.comcode
             const refno = obj.refno
-            console.log(comcode);
-            console.log(refno);
             const foundPinkform = await this.pinkformRepository.findOne({
                 where: {
                     comcode: comcode,
