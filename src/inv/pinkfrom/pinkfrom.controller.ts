@@ -54,7 +54,7 @@ export class PinkfromController {
             const pinkhinv = new PinkHinv();
             pinkform.comcode = comcode
             pinkhinv.refno = resa
-            pinkhinv.invno = resa
+            pinkhinv.invno = ''
             pinkform.refno = resa;
             const givenDate = new Date();
             const givenDatespit = givenDate.toISOString().split('T')[0];
