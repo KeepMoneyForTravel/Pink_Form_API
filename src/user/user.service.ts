@@ -34,6 +34,8 @@ export class UserService {
     cp.refid,
     cp.taxid,
     cp.gateway,
+    cp.isbroker,
+    cp.branchno,
     cp.org
     FROM
     apitestd_pinkfrom._usrgrantpink ug
@@ -46,5 +48,7 @@ export class UserService {
     const grp = await this.userRepository.query(query);
     return grp
   }
+
+  
 
 }

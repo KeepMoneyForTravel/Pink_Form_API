@@ -439,3 +439,10 @@ export class InvRes {
 }
 
 
+export class ComRes {
+  isbroker?: string | null;
+  taxid?: string | null;
+  branchno?: string | null;
+}
+
+

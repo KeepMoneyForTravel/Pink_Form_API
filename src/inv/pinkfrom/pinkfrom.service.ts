@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PinkfromReq, Pinkform } from 'src/entity/inv/pinkfrom.entity';
+import { PinkfromReq, Pinkform, ComRes } from 'src/entity/inv/pinkfrom.entity';
+import { UsernamePink } from 'src/entity/user/usernamepink.entity';
 import { Between, Repository } from 'typeorm';
 
 @Injectable()
 export class PinkfromService {
     constructor(
         @InjectRepository(Pinkform)
-        private pinkformRepository: Repository<Pinkform>,
+        private pinkformRepository: Repository<Pinkform>
     ) { }
     headpink: Pinkform[] | []
     async GetpinkfromStatus(): Promise<Pinkform[]> {
@@ -43,7 +44,7 @@ export class PinkfromService {
         const result = await this.pinkformRepository.query(
             `
             SELECT refno 
-            FROM apitestd_pinkfrom.pinkform 
+            FROM pinkform 
             WHERE comcode = ? 
             ORDER by refno DESC
             LIMIT 1;
@@ -61,10 +62,8 @@ export class PinkfromService {
         }
     }
 
-    async getPinkfromByOne(obj: Pinkform): Promise<Pinkform> {
+    async getPinkfromByOne(comcode: string, refno: string): Promise<Pinkform> {
         try {
-            const comcode = obj.comcode
-            const refno = obj.refno
             const foundPinkform = await this.pinkformRepository.findOne({
                 where: {
                     comcode: comcode,

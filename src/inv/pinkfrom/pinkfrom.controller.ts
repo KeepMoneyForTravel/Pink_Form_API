@@ -5,11 +5,12 @@ import { InvRes, Pinkform, PinkfromReq } from 'src/entity/inv/pinkfrom.entity';
 import { HinvService } from '../hinv/hinv.service';
 import { PinkfromHeadReq, PinkHinv } from 'src/entity/inv/hinv.entity';
 import { EinvService } from '../einv/einv.service';
+import { UserService } from 'src/user/user.service';
 
 @ApiTags('INV')
 @Controller('pinkfrom')
 export class PinkfromController {
-    constructor(private readonly pinkfromService: PinkfromService, private readonly hinvService: HinvService, private readonly einvService: EinvService) { }
+    constructor(private readonly pinkfromService: PinkfromService, private readonly hinvService: HinvService, private readonly einvService: EinvService, private readonly userService: UserService) { }
 
     @Get('GetPinkbyone/:comcode/:refno')
     async IGetPinkbyone(@Param('comcode') comcode: string, @Param('refno') refno: string) {
@@ -83,15 +84,75 @@ export class PinkfromController {
         }
     }
 
+    @Patch('Copypinkfrom/:refno/:comcode/:usr')
+    async ICopypinkfrom(@Param('refno') refno: string, @Param('comcode') comcode: string, @Param('usr') usr: string) {
+        try {
+            const res = await this.pinkfromService.GetpinkfromDesc(comcode);
+            const foundPinkfrom = await this.pinkfromService.getPinkfromByOne(comcode, refno);
+            const foundPinkHinv = await this.hinvService.getPinkHinvfromByOne(comcode, refno);
+            const foundPinkEinv = await this.einvService.GetPinkEinvbyone(comcode, refno);
+            const prefix = res.slice(0, 4);
+            const numericPart = res.slice(4);
+            const incrementedNumber = (parseInt(numericPart) + 1).toString().padStart(numericPart.length, '0');
+            const resa = prefix + incrementedNumber;
+            const pinkform = foundPinkfrom
+            const pinkhinv = foundPinkHinv
+            pinkform.comcode = comcode
+            pinkhinv.refno = resa
+            pinkform.refno = resa;
+            const givenDate = new Date();
+            const givenDatespit = givenDate.toISOString().split('T')[0];
+            const newfoundPinkEinv = foundPinkEinv.map(item => ({
+                ...item,
+                refno: resa,
+                usrname: usr,
+                update_dd: givenDatespit.split("-").join(""),
+                update_tt: givenDate.toTimeString().split(' ')[0]
+            }));
+            pinkform.refdd = givenDatespit.split("-").join("");
+            pinkform.status = ''
+            pinkform.update_tt = givenDate.toTimeString().split(' ')[0];
+            pinkform.usr_create = usr
+            pinkform.usr_create_dd = givenDatespit.split("-").join("");
+            pinkform.usr_create_tt = givenDate.toTimeString().split(' ')[0];
+            pinkform.usrname = usr
+            pinkform.update_dd = givenDatespit.split("-").join("");
+            pinkhinv.update_tt = givenDate.toTimeString().split(' ')[0];
+            pinkhinv.usrname = usr
+            pinkhinv.update_dd = givenDatespit.split("-").join("");
+            pinkhinv.usrname = usr
+            pinkhinv.update_dd = givenDatespit.split("-").join("");
+            pinkhinv.comcode = comcode
+            const resinsert = await this.pinkfromService.insertPinkfrom(pinkform);
+            const resinserthinv = await this.hinvService.insertPinkHinv(pinkhinv);
+            let newInsertedList = [];
+            for(let a of newfoundPinkEinv){
+                const resinserteinv = await this.einvService.insertPinkEinv(a);
+                newInsertedList.push(resinserteinv);
+            }
+            const response: InvRes = {
+                pinkform: resinsert,
+                pinkHinv: Array.isArray(resinserthinv) ? resinserthinv : [resinserthinv],
+                pinkEinv: newInsertedList
+            };
+
+            return response;
+
+        } catch (error) {
+            console.error('Error Not Found', error);
+            throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @Patch('UpdateOrInsertPinkfrom')
     async IUpdateOrInsertPinkfrom(@Body() obj: PinkfromHeadReq) {
         try {
-            const foundPinkfrom = await this.pinkfromService.getPinkfromByOne(obj.pinkform);
+            const foundPinkfrom = await this.pinkfromService.getPinkfromByOne(obj.pinkform.comcode, obj.pinkform.refno);
             const respinkfrom = await this.pinkfromService.UpdatePinkfrom(obj.pinkform, foundPinkfrom);
-            const foundPinkHinv = await this.hinvService.getPinkHinvfromByOne(obj.pinkHinv);
+            const foundPinkHinv = await this.hinvService.getPinkHinvfromByOne(obj.pinkHinv.comcode, obj.pinkHinv.refno);
             const reshinv = await this.hinvService.UpdatePinkHinv(obj.pinkHinv, foundPinkHinv);
             return {
-                foundPinkHinv,
+                respinkfrom,
                 reshinv,
             };
         } catch (error) {

@@ -6,9 +6,10 @@ import { Pinkform } from 'src/entity/inv/pinkfrom.entity';
 import { PinkfromController } from './pinkfrom.controller';
 import { HinvModule } from '../hinv/hinv.module';
 import { EinvModule } from '../einv/einv.module';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Pinkform]) , HinvModule ,EinvModule], 
+  imports: [TypeOrmModule.forFeature([Pinkform]) , HinvModule ,EinvModule ,UserModule], 
     providers: [PinkfromService],
     controllers: [PinkfromController],
     exports: [PinkfromService],

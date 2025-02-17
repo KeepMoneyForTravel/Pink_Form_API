@@ -107,6 +107,11 @@ export class AuthDetail {
   gateway: string;
   @Column()
   org: string;
+  @Column()
+  isbroker: string;
+  @Column()
+  branchno: string;
+
 }
 
 @Entity()

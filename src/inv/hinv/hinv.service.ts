@@ -9,10 +9,8 @@ export class HinvService {
         @InjectRepository(PinkHinv)
         private hinvRepository: Repository<PinkHinv>,
     ) { }
-    async getPinkHinvfromByOne(obj: PinkHinv): Promise<PinkHinv> {
+    async getPinkHinvfromByOne(comcode: string, refno: string): Promise<PinkHinv> {
         try {
-            const comcode = obj.comcode
-            const refno = obj.refno
             const foundPinkHinv = await this.hinvRepository.findOne({
                 where: {
                     comcode: comcode,
@@ -25,18 +23,18 @@ export class HinvService {
             return foundPinkHinv;
         } catch (error) {
             console.error('Error fetching pinkHinv:', error);
-            throw new Error(error.message); 
+            throw new Error(error.message);
         }
     }
 
     async insertPinkHinv(obj: PinkHinv): Promise<PinkHinv> {
-            try {
-                const foundPinkHinv = this.hinvRepository.create(obj);
-                return await this.hinvRepository.save(foundPinkHinv);
-            } catch (error) {
-                throw new Error('Error inserting new Hinv: ' + error.message);
-            }
+        try {
+            const foundPinkHinv = this.hinvRepository.create(obj);
+            return await this.hinvRepository.save(foundPinkHinv);
+        } catch (error) {
+            throw new Error('Error inserting new Hinv: ' + error.message);
         }
+    }
 
     async GetPinkHinvbyone(comcode: string, refno: string): Promise<PinkHinv[]> {
         try {
@@ -46,18 +44,18 @@ export class HinvService {
                     refno: refno,
                 },
             });
-    
+
             if (!foundPinkHinv) {
                 return [];
             }
-    
+
             return foundPinkHinv || [];
         } catch (error) {
             console.error('Error fetching PinkHinv:', error);
             throw new Error(error.message);
         }
     }
-    
+
 
     async UpdatePinkHinv(obj: PinkHinv, objold: PinkHinv): Promise<PinkHinv> {
         Object.keys(obj).forEach((key) => {
