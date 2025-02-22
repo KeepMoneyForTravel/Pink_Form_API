@@ -68,15 +68,7 @@ export class PinkfromController {
             pinkhinv.update_dd = givenDatespit.split("-").join("");
             pinkhinv.comcode = comcode
             const resinsert = await this.pinkfromService.insertPinkfrom(pinkform);
-            const resinserthinv = await this.hinvService.insertPinkHinv(pinkhinv);
-            // Ensure resinserthinv is added to an array
-            const response: InvRes = {
-                pinkform: resinsert,
-                pinkHinv: Array.isArray(resinserthinv) ? resinserthinv : [resinserthinv], // Push into a list
-                pinkEinv: []
-            };
-
-            return response;
+            return resinsert;
 
         } catch (error) {
             console.error('Error Not Found', error);
@@ -98,7 +90,6 @@ export class PinkfromController {
             const pinkform = foundPinkfrom
             const pinkhinv = foundPinkHinv
             pinkform.comcode = comcode
-            pinkhinv.refno = resa
             pinkform.refno = resa;
             const givenDate = new Date();
             const givenDatespit = givenDate.toISOString().split('T')[0];
@@ -117,25 +108,33 @@ export class PinkfromController {
             pinkform.usr_create_tt = givenDate.toTimeString().split(' ')[0];
             pinkform.usrname = usr
             pinkform.update_dd = givenDatespit.split("-").join("");
-            pinkhinv.update_tt = givenDate.toTimeString().split(' ')[0];
-            pinkhinv.usrname = usr
-            pinkhinv.update_dd = givenDatespit.split("-").join("");
-            pinkhinv.usrname = usr
-            pinkhinv.update_dd = givenDatespit.split("-").join("");
-            pinkhinv.comcode = comcode
             const resinsert = await this.pinkfromService.insertPinkfrom(pinkform);
-            const resinserthinv = await this.hinvService.insertPinkHinv(pinkhinv);
-            let newInsertedList = [];
-            for(let a of newfoundPinkEinv){
-                const resinserteinv = await this.einvService.insertPinkEinv(a);
-                newInsertedList.push(resinserteinv);
+            let resinserthinv: any[] = [];
+            if (pinkhinv != null) {
+                pinkhinv.refno = resa
+                pinkhinv.update_tt = givenDate.toTimeString().split(' ')[0];
+                pinkhinv.usrname = usr
+                pinkhinv.update_dd = givenDatespit.split("-").join("");
+                pinkhinv.usrname = usr
+                pinkhinv.update_dd = givenDatespit.split("-").join("");
+                pinkhinv.comcode = comcode
+                const result = await this.hinvService.insertPinkHinv(pinkhinv);
+                resinserthinv = Array.isArray(result) ? result : [result];
             }
+
+            let newInsertedList = [];
+            if (newfoundPinkEinv.length > 0) {
+                for (let a of newfoundPinkEinv) {
+                    const resinserteinv = await this.einvService.insertPinkEinv(a);
+                    newInsertedList.push(resinserteinv);
+                }
+            }
+
             const response: InvRes = {
                 pinkform: resinsert,
-                pinkHinv: Array.isArray(resinserthinv) ? resinserthinv : [resinserthinv],
+                pinkHinv: pinkhinv ? (Array.isArray(resinserthinv) ? resinserthinv : [resinserthinv]) : [],
                 pinkEinv: newInsertedList
             };
-
             return response;
 
         } catch (error) {
@@ -149,7 +148,19 @@ export class PinkfromController {
         try {
             const foundPinkfrom = await this.pinkfromService.getPinkfromByOne(obj.pinkform.comcode, obj.pinkform.refno);
             const respinkfrom = await this.pinkfromService.UpdatePinkfrom(obj.pinkform, foundPinkfrom);
+            if (obj.pinkHinv == null) {
+                return {
+                    respinkfrom
+                };
+            }
             const foundPinkHinv = await this.hinvService.getPinkHinvfromByOne(obj.pinkHinv.comcode, obj.pinkHinv.refno);
+            if (foundPinkHinv == null) {
+                const reshinv = await this.hinvService.insertPinkHinv(obj.pinkHinv);
+                return {
+                    respinkfrom,
+                    reshinv,
+                };
+            }
             const reshinv = await this.hinvService.UpdatePinkHinv(obj.pinkHinv, foundPinkHinv);
             return {
                 respinkfrom,
