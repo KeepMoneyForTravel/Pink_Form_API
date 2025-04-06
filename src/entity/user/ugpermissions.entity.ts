@@ -1,78 +1,74 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { IsOptional, IsString, IsBoolean } from 'class-validator';
+import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
 
-@Entity('ugpermissions')
-export class UgPermissions {
+@Entity('usrgpermission')
+@Unique(['userGroupCode', 'rowdec'])
+export class Usrg {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsString()
-  @Column({ type: 'varchar', length: 50, charset: 'tis620', collation: 'tis620_bin' })
-  user_group_code: string;
+  @Column({ type: 'varchar', length: 255 })
+  userGroupCode: string;
 
-  @IsOptional()
-  @Column({ type: 'varchar', length: 255, charset: 'tis620', collation: 'tis620_bin', nullable: true })
-  description: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  rowdec: string;
 
-  @IsOptional()
-  @Column({ type: 'varchar', length: 50, charset: 'tis620', collation: 'tis620_bin', nullable: true })
-  category: string;
+  @Column({ type: 'varchar', length: 10, nullable: true })
+  show: string;
 
-  @IsOptional()
-  @Column({ type: 'varchar', length: 255, charset: 'tis620', collation: 'tis620_bin', nullable: true })
-  modulename: string;
+  @Column({ type: 'varchar', length: 10, nullable: true })
+  add: string;
 
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  showpermission: boolean;
+  @Column({ type: 'varchar', length: 10, nullable: true })
+  edit: string;
 
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  addpermission: boolean;
+  @Column({ type: 'varchar', length: 10, nullable: true })
+  delete: string;
 
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  editpermission: boolean;
+  @Column({ type: 'varchar', length: 10, nullable: true })
+  copy: string;
 
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  deletepermission: boolean;
+  @Column({ type: 'varchar', length: 10, nullable: true })
+  report: string;
 
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  copypermission: boolean;
+  @Column({ type: 'varchar', length: 10, nullable: true })
+  export: string;
+}
 
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  reportpermission: boolean;
+export interface PermissionDto {
+  id?: number; // optional (ไม่ต้องใช้ก็ได้)
+  userGroupCode: string;
+  rowdec: string;
+  show: string;
+  add: string;
+  edit: string;
+  delete: string;
+  copy: string;
+  report: string;
+  export: string;
+}
 
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  exportpermission: boolean;
+export interface PermissionDtoTran {
+  id?: number; // optional (ไม่ต้องใช้ก็ได้)
+  userGroupCode: string;
+  rowdec: string;
+  show: string;
+  add: string;
+  edit: string;
+  delete: string;
+  copy: string;
+  close: string;
+  unclose: string;
+  previewDd: string;
+  viewXML: string;
+  viewresponse: string;
+  changeInv: string;
+  Recalculate: string;
+}
 
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  closepermission: boolean;
+export interface MasterfilePermissions {
+  [key: string]: PermissionDto;
+}
 
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  unclosepermission: boolean;
-
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  previewDdpermission: boolean;
-
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  viewXMLpermission: boolean;
-
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  viewResponsespermission: boolean;
-
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  changeinvoicesnopermission: boolean;
-
-  @Column({ type: 'tinyint', width: 1, default: 0 })
-  recalculatepermission: boolean;
-
-  @IsString()
-  @Column({ type: 'varchar', length: 100, charset: 'tis620', collation: 'tis620_bin', default: '' })
-  usrname: string;
-
-  @IsOptional()
-  @Column({ type: 'date', nullable: true })
-  update_dd: Date;
-
-  @IsOptional()
-  @Column({ type: 'time', nullable: true })
-  update_tt: string;
+export interface MasterfilePermissionsTran {
+  [key: string]: PermissionDtoTran;
 }

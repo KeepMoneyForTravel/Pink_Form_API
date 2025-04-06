@@ -65,4 +65,31 @@ export class HinvService {
         });
         return await this.hinvRepository.save(objold);
     }
+    async deleteHinv(comcode: string, refno: string, invno: string): Promise<boolean> {
+        try {
+            const result = await this.hinvRepository.delete({ comcode, refno, invno });
+            return result.affected > 0;
+        } catch (error) {
+            console.error('Error deleting Hinv:', error);
+            throw new Error(error.message);
+        }
+    }
+    async ChangeHinv(comcode: string, refno: string, invno: string): Promise<PinkHinv[]> {
+        try {
+            const updatedRecords = await this.hinvRepository.update(
+                {
+                    comcode,
+                    refno,
+                    invno,
+                },
+                {
+                    invno,
+                }
+            );
+            return []
+        } catch (error) {
+            console.error('Error fetching pinkHinv:', error);
+            throw new Error(error.message);
+        }
+    }
 }

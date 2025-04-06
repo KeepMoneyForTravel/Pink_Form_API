@@ -98,7 +98,7 @@ export class PinkfromService {
             throw new Error(error.message);
         }
     }
-    
+
     async UpdatePinkfrom(obj: Pinkform, objold: Pinkform): Promise<Pinkform> {
         console.log('A');
         Object.keys(obj).forEach((key) => {
@@ -108,6 +108,13 @@ export class PinkfromService {
         });
         const A = await this.pinkformRepository.save(objold);
         return A
-        
+
+    }
+    async deletePinkFrom(comcode: string, refno: string): Promise<boolean> {
+        const result = await this.pinkformRepository.delete({ comcode, refno });
+        if (result.affected === 0) {
+            return false; // No rows deleted
+        }
+        return true; // Deletion successful
     }
 }

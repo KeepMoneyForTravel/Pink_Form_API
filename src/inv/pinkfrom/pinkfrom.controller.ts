@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PinkfromService } from './pinkfrom.service';
 import { InvRes, Pinkform, PinkfromReq } from 'src/entity/inv/pinkfrom.entity';
@@ -171,4 +171,40 @@ export class PinkfromController {
             throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @Patch('ChangeHinv/:comcode/:refno/:invno')
+    async IChangeHinv(
+        @Param('comcode') comcode: string,
+        @Param('refno') refno: string,
+        @Param('invno') invno: string
+    ) {
+        try {
+            const res = await this.hinvService.ChangeHinv(comcode, refno, invno);
+            return res;
+
+        } catch (error) {
+            console.error('Error Not Found', error);
+            throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @Delete('DeletePinkFrom/:comcode/:refno')
+    @HttpCode(HttpStatus.OK)
+    async deletePinkFrom(
+        @Param('comcode') comcode: string,
+        @Param('refno') refno: string
+    ): Promise<boolean> {
+        return await this.pinkfromService.deletePinkFrom(comcode, refno);
+    }
+    @Delete('DeleteHinv/:comcode/:refno/:invno')
+    @HttpCode(HttpStatus.OK)
+    async deleteHinv(
+        @Param('comcode') comcode: string,
+        @Param('refno') refno: string,
+        @Param('invno') invno: string,
+    ): Promise<boolean> {
+        return await this.hinvService.deleteHinv(comcode, refno, invno);
+    }
+
+
+
+
 }
