@@ -94,16 +94,17 @@ export class EinvService {
       throw new Error(error.message);
     }
   }
-  async UpdatePinkEinvByOne(comcode: string, refno: string, invno: string, itemno: string): Promise<PinkEinv> {
+  async UpdatePinkEinvByOne(comcode: string, refno: string, invno: string, itemnoold: string, itemnonew: string): Promise<PinkEinv> {
     try {
       const updatedRecords = await this.einvRepository.update(
         {
           comcode,
           refno,
           invno,
+          itemno: itemnoold
         },
         {
-          itemno,
+          itemno: itemnonew
         }
       );
       return null

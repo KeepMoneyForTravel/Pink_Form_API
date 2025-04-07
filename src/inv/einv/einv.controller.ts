@@ -33,17 +33,18 @@ export class EinvController {
         }
     }
     
-    @Patch('ChangeEinv/:comcode/:refno/:invno/:itemno')
+    @Patch('ChangeEinv/:comcode/:refno/:invno/:itemnoold/:itemnonew')
     async IChangeHinv(
         @Param('comcode') comcode: string,
         @Param('refno') refno: string,
         @Param('invno') invno: string,
-        @Param('itemno') itemno: string,
+        @Param('itemnoold') itemnoold: string,
+        @Param('itemnonew') itemnonew: string
     ) {
         try {
-            const res = await this.einvService.GetEinvByOne(comcode, refno, invno, itemno);
+            const res = await this.einvService.GetEinvByOne(comcode, refno, invno, itemnoold);
             if(res == null){
-                const res = await this.einvService.UpdatePinkEinvByOne(comcode, refno, invno, itemno);
+                const res = await this.einvService.UpdatePinkEinvByOne(comcode, refno, invno, itemnoold , itemnonew);
             }else{
                 throw new HttpException('รายการซ้ำ', HttpStatus.NOT_FOUND);
             }

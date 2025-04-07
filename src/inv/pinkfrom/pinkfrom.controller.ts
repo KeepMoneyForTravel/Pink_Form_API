@@ -171,14 +171,15 @@ export class PinkfromController {
             throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @Patch('ChangeHinv/:comcode/:refno/:invno')
+    @Patch('ChangeHinv/:comcode/:refno/:invnoold/:invnonew')
     async IChangeHinv(
         @Param('comcode') comcode: string,
         @Param('refno') refno: string,
-        @Param('invno') invno: string
+        @Param('invnoold') invnoold: string,
+        @Param('invnonew') invnonew: string
     ) {
         try {
-            const res = await this.hinvService.ChangeHinv(comcode, refno, invno);
+            const res = await this.hinvService.ChangeHinv(comcode, refno, invnoold ,invnonew);
             return res;
 
         } catch (error) {

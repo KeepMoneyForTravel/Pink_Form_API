@@ -74,16 +74,16 @@ export class HinvService {
             throw new Error(error.message);
         }
     }
-    async ChangeHinv(comcode: string, refno: string, invno: string): Promise<PinkHinv[]> {
+    async ChangeHinv(comcode: string, refno: string, invnoold: string, invnonew: string): Promise<PinkHinv[]> {
         try {
             const updatedRecords = await this.hinvRepository.update(
                 {
-                    comcode,
-                    refno,
-                    invno,
+                    comcode: comcode,
+                    refno: refno,
+                    invno: invnoold
                 },
                 {
-                    invno,
+                    invno: invnonew,
                 }
             );
             return []
