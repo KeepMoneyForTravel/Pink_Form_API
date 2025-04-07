@@ -1,3 +1,6 @@
+import { CompanypinkModule } from './masterfile/companypink/companypink.module';
+import { CompanypinkService } from './masterfile/companypink/companypink.service';
+import { CompanypinkController } from './masterfile/companypink/companypink.controller';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -47,6 +50,7 @@ import { UgpermissionsModule } from './ugpermissions/ugpermissions.module';
 
 @Module({
   imports: [
+        CompanypinkModule, 
     AuthModule,
     TypeOrmModule.forRoot({
       type: 'mysql',

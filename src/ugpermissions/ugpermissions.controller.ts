@@ -1,15 +1,16 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { UgpermissionsService } from './ugpermissions.service';
-import { MasterfilePermissions, MasterfilePermissionsTran, Usrg } from 'src/entity/user/ugpermissions.entity';
+import { MasterfilePermissions, MasterfilePermissionsSend, MasterfilePermissionsTran, Usrg } from 'src/entity/user/ugpermissions.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { UgtranService } from './ugtran/ugtran.service';
+import { UgsendService } from './ugsend/ugsend.service';
 
 //@UseGuards(JwtAuthGuard)
 @ApiTags('User Group Permissions')
 @Controller('ugpermissions')
 export class UgpermissionsController {
-  constructor(private readonly ugpermissionsService: UgpermissionsService , private readonly ugtranService: UgtranService) { }
+  constructor(private readonly ugpermissionsService: UgpermissionsService , private readonly ugsendService: UgsendService ,private readonly ugtranService: UgtranService) { }
   @Get('GetUgpermissions/:userGroupCode')
   async IGetUgpermissions(@Param('userGroupCode') userGroupCode: string) {
     try {
@@ -31,6 +32,23 @@ export class UgpermissionsController {
       console.error('Error Not Found', error);
       throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  @Get('GetUgpermissionsSend/:userGroupCode')
+  async IGetUgpermissionsSend(@Param('userGroupCode') userGroupCode: string) {
+    try {
+      const res = await this.ugsendService.getAllPermissionsSendByUserGroup(userGroupCode);
+      return res;
+
+    } catch (error) {
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  @Post('upsertSend')
+  async upsertPermissionsSend(@Body() data: MasterfilePermissionsSend) {
+    await this.ugsendService.upsertPermissionsSend(data);
+    return { message: 'Permissions upserted successfully.' };
   }
   @Post('upsertTran')
   async upsertPermissionsTran(@Body() data: MasterfilePermissionsTran) {

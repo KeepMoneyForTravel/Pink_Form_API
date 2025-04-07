@@ -7,9 +7,12 @@ import { UsrTran } from 'src/entity/user/usrtran.entity';
 import { UgtranService } from './ugtran/ugtran.service';
 import { UgtranController } from './ugtran/ugtran.controller';
 import { UgtranModule } from './ugtran/ugtran.module';
+import { UgsendController } from './ugsend/ugsend.controller';
+import { UgsendService } from './ugsend/ugsend.service';
+import { UgsendModule } from './ugsend/ugsend.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Usrg]), UgtranModule], 
+  imports: [TypeOrmModule.forFeature([Usrg]), UgtranModule, UgsendModule], 
   providers: [UgpermissionsService],
   controllers: [UgpermissionsController],
   exports: [UgpermissionsService],

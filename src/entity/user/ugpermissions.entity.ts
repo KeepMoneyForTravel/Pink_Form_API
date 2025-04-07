@@ -47,8 +47,16 @@ export interface PermissionDto {
   export: string;
 }
 
+export interface PermissionDtoSend {
+  id?: number;
+  userGroupCode: string;
+  usrloginsurkey: string;
+  sendDeclaration: string;
+  receiveCusres: string;
+}
+
 export interface PermissionDtoTran {
-  id?: number; // optional (ไม่ต้องใช้ก็ได้)
+  id?: number;
   userGroupCode: string;
   rowdec: string;
   show: string;
@@ -71,4 +79,8 @@ export interface MasterfilePermissions {
 
 export interface MasterfilePermissionsTran {
   [key: string]: PermissionDtoTran;
+}
+
+export interface MasterfilePermissionsSend {
+  [key: string]: PermissionDtoSend;
 }
