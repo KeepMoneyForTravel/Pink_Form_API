@@ -54,6 +54,11 @@ export interface PermissionDtoSend {
   sendDeclaration: string;
   receiveCusres: string;
 }
+export interface reqhead {
+  grpcode: string;
+  grpname: string;
+  grpdesc: string;
+}
 
 export interface PermissionDtoTran {
   id?: number;

@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { UgpermissionsService } from './ugpermissions.service';
-import { MasterfilePermissions, MasterfilePermissionsSend, MasterfilePermissionsTran, Usrg } from 'src/entity/user/ugpermissions.entity';
+import { MasterfilePermissions, MasterfilePermissionsSend, MasterfilePermissionsTran, reqhead, Usrg } from 'src/entity/user/ugpermissions.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { UgtranService } from './ugtran/ugtran.service';
@@ -10,7 +10,7 @@ import { UgsendService } from './ugsend/ugsend.service';
 @ApiTags('User Group Permissions')
 @Controller('ugpermissions')
 export class UgpermissionsController {
-  constructor(private readonly ugpermissionsService: UgpermissionsService , private readonly ugsendService: UgsendService ,private readonly ugtranService: UgtranService) { }
+  constructor(private readonly ugpermissionsService: UgpermissionsService, private readonly ugsendService: UgsendService, private readonly ugtranService: UgtranService) { }
   @Get('GetUgpermissions/:userGroupCode')
   async IGetUgpermissions(@Param('userGroupCode') userGroupCode: string) {
     try {
@@ -59,5 +59,33 @@ export class UgpermissionsController {
   async upsertPermissions(@Body() data: MasterfilePermissions) {
     await this.ugpermissionsService.upsertPermissions(data);
     return { message: 'Permissions upserted successfully.' };
+  }
+  @Post('insertgrp')
+  async insertgrp(@Body() data: reqhead) {
+    await this.ugpermissionsService.insertgrp(data);
+    return { message: 'Permissions upserted successfully.' };
+  }
+  
+  @Delete('delete/:userGroupCode')
+  async deletePermissions(@Param('userGroupCode') userGroupCode: string) {
+    try {
+      const res = await this.ugpermissionsService.deletePermissions(userGroupCode);
+      return res;
+    } catch (error) {
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @Get('GetAllGroupCode')
+  async IGetAllGroupCode(){
+    try {
+      const res = await this.ugpermissionsService.getAllGroupCode();
+      return res;
+
+    } catch (error) {
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
