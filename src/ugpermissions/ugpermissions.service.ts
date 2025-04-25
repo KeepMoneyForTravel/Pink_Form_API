@@ -11,11 +11,11 @@ export class UgpermissionsService {
         @InjectRepository(Usrg)
         private ugpermissionsRepository: Repository<Usrg>,
 
-        @InjectRepository(UsrSend)
-        private usrsendRepository: Repository<UsrSend>,
+        // @InjectRepository(UsrSend)
+        // private usrsendRepository: Repository<UsrSend>,
 
-        @InjectRepository(UsrTran)
-        private usrtranRepository: Repository<UsrTran>,
+        // @InjectRepository(UsrTran)
+        // private usrtranRepository: Repository<UsrTran>,
     ) { }
     async getAllPermissionsByUserGroup(userGroupCode: string) {
         const rows = [
@@ -76,17 +76,25 @@ export class UgpermissionsService {
     }
 
     async deletePermissions(userGroupCode: string): Promise<void> {
-        const result1 = await this.usrsendRepository.delete({ userGroupCode });
-        const result2 = await this.usrtranRepository.delete({ userGroupCode });
-        const result3 = await this.ugpermissionsRepository.delete({ userGroupCode });
+        await this.ugpermissionsRepository.query(
+            `DELETE FROM apitestd_pinkfrom.usrgpermission WHERE userGroupCode = ?`,
+            [userGroupCode]
+          );
+          
+          await this.ugpermissionsRepository.query(
+            `DELETE FROM apitestd_pinkfrom.usr_send WHERE userGroupCode = ?`,
+            [userGroupCode]
+          );
+          
+          await this.ugpermissionsRepository.query(
+            `DELETE FROM apitestd_pinkfrom.usr_tran WHERE userGroupCode = ?`,
+            [userGroupCode]
+          );
         const grp = await this.ugpermissionsRepository.query(
             `
              Update apitestd_pinkfrom.usernamepink set grpcode = '' where grpcode = ?
             `,[userGroupCode]
         );
-        if (result1.affected === 0) {
-            throw new NotFoundException(`No permissions found for user group code: ${userGroupCode}`);
-        }
     }
     async getAllGroupCode(): Promise<any> {
         try {
