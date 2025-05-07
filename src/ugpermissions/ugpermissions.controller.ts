@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { UgpermissionsService } from './ugpermissions.service';
-import { MasterfilePermissions, MasterfilePermissionsSend, MasterfilePermissionsTran, reqhead, Usrg } from 'src/entity/user/ugpermissions.entity';
+import { MasterfilePermissions, MasterfilePermissionsSend, MasterfilePermissionsTran, reqhead, UsernameComcode, UsernamePink, Usrg } from 'src/entity/user/ugpermissions.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { UgtranService } from './ugtran/ugtran.service';
@@ -57,6 +57,7 @@ export class UgpermissionsController {
   }
   @Post('upsert')
   async upsertPermissions(@Body() data: MasterfilePermissions) {
+    console.log(data);
     await this.ugpermissionsService.upsertPermissions(data);
     return { message: 'Permissions upserted successfully.' };
   }
@@ -65,7 +66,6 @@ export class UgpermissionsController {
     await this.ugpermissionsService.insertgrp(data);
     return { message: 'Permissions upserted successfully.' };
   }
-  
   @Delete('delete/:userGroupCode')
   async deletePermissions(@Param('userGroupCode') userGroupCode: string) {
     try {
@@ -82,6 +82,46 @@ export class UgpermissionsController {
     try {
       const res = await this.ugpermissionsService.getAllGroupCode();
       return res;
+
+    } catch (error) {
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @Get('GetUgpermissionsCompany/:comcode')
+  async IGetUgpermissionsCompany(@Param('comcode') comcode: string) {
+    try {
+      const res1 = await this.ugpermissionsService.getheadCompany(comcode);
+      const res = await this.ugpermissionsService.getAllPermissionsCompany(comcode);
+      return {
+        headCompany: res1,
+        permissions: res
+      };
+
+    } catch (error) {
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @Post('upsertUserPink')
+  async upsertUserPink(@Body() data: UsernamePink) {
+    await this.ugpermissionsService.upsertUserPink(data);
+    return { message: 'Permissions upserted successfully.' };
+  }
+
+  @Post('upsertUgpermissionsCompany')
+  async upsertUgpermissionsCompany(@Body() data: UsernameComcode[]) {
+    await this.ugpermissionsService.upsertUgpermissionsCompany(data);
+    return { message: 'Permissions upserted successfully.' };
+  }
+
+  @Get('Getusernamepink')
+  async IGetusernamepink() {
+    try {
+      const res1 = await this.ugpermissionsService.getusernamepink();
+      return res1
 
     } catch (error) {
       console.error('Error Not Found', error);

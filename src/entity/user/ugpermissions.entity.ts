@@ -89,3 +89,28 @@ export interface MasterfilePermissionsTran {
 export interface MasterfilePermissionsSend {
   [key: string]: PermissionDtoSend;
 }
+
+export interface UsernamePink {
+  username: string;
+  usrpasswrd: string;
+  usrpasswrd2: string;
+  grpcode: string;
+  meiosysuser: string;
+  meiosyspassword: string;
+  certserialno: string;
+  certserialno2013: string;
+  syscfgcode: string | null;
+  strucver: string;
+  fldchk: string;
+  progver: string;
+  usrname: string;
+  update_dd: string;
+  update_tt: string;
+  usrpasswrd3: string;
+}
+
+export interface UsernameComcode {
+  username: string;
+  comcode: string;
+  match_flag: string;
+}
