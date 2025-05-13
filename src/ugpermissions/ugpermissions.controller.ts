@@ -128,4 +128,14 @@ export class UgpermissionsController {
       throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+  @Delete('deleteusr/:usr')
+  async deleteUgpermissionsCompany(@Param('usr') usr: string) {
+    try {
+      const res = await this.ugpermissionsService.deleteUgpermissionsCompany(usr);
+      return res;
+    } catch (error) {
+      console.error('Error Not Found', error);
+      throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }

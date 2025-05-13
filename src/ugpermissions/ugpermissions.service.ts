@@ -230,19 +230,15 @@ export class UgpermissionsService {
 
     async upsertUgpermissionsCompany(user: UsernameComcode[]): Promise<void> {
         console.log(user);
-        
         for (let index of user) {
             const { username, match_flag, comcode } = index;
-          
             // ตรวจสอบว่า (username, comcode) มีอยู่ในตาราง `_usrgrantpink` หรือไม่
             const exists = await this.ugpermissionsRepository.query(
               `SELECT COUNT(*) AS count FROM _usrgrantpink WHERE usr_name = ? AND comcode = ?`,
               [username, comcode]
             );
-            const count = parseInt(exists[0]?.count || '0');
+            const count = parseInt(exists[0]?.count || 0);
             console.log(count);
-            
-          
             if (count > 0) {
               // ถ้ามีข้อมูลอยู่แล้ว จะอัปเดตเป็น 'F'
               await this.ugpermissionsRepository.query(
@@ -256,7 +252,6 @@ export class UgpermissionsService {
                 [username, comcode]
               );
               const inactiveCount = parseInt(existsInactive[0]?.count || '0');
-          
               if (inactiveCount > 0) {
                 // ถ้ามีข้อมูลที่ `isright = 'F'` อยู่แล้ว ให้เปลี่ยนสถานะเป็น 'T'
                 await this.ugpermissionsRepository.query(
@@ -266,15 +261,23 @@ export class UgpermissionsService {
               } else {
                 // ถ้าไม่มีข้อมูล, ก็ insert ข้อมูลใหม่ด้วย `isright = 'T'`
                 await this.ugpermissionsRepository.query(
-                  `INSERT INTO _usrgrantpink (usr_name, comcode, isright,datayear) VALUES (?, ?, 'T' ,'')`,
-                  [username, comcode]
+                  `INSERT INTO _usrgrantpink (usr_name, comcode, isright,datayear) VALUES (?, ?, ? ,'')`,
+                  [username, comcode ,match_flag]
                 );
               }
             }
           }
           
     }
+    async deleteUgpermissionsCompany(usr: string): Promise<void> {
+        await this.ugpermissionsRepository.query(
+            `DELETE FROM _usrgrantpink WHERE comcode = ?`,
+            [usr]
+        );
 
-
-
+        await this.ugpermissionsRepository.query(
+            `DELETE FROM usernamepink WHERE comcode = ?`,
+            [usr]
+        );
+    }
 }
