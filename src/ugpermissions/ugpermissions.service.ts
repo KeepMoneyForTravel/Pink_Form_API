@@ -271,12 +271,12 @@ export class UgpermissionsService {
     }
     async deleteUgpermissionsCompany(usr: string): Promise<void> {
         await this.ugpermissionsRepository.query(
-            `DELETE FROM _usrgrantpink WHERE comcode = ?`,
+            `DELETE FROM _usrgrantpink WHERE username = ?`,
             [usr]
         );
 
         await this.ugpermissionsRepository.query(
-            `DELETE FROM usernamepink WHERE comcode = ?`,
+            `DELETE FROM usernamepink Where usr_name = ?`,
             [usr]
         );
     }
