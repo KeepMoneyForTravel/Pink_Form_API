@@ -117,4 +117,27 @@ export class PinkfromService {
         }
         return true; // Deletion successful
     }
+    async GetPinkfromByComcode(comcode: string): Promise<string> {
+        const result = await this.pinkformRepository.query(
+            `
+            SELECT refid 
+            FROM _companypink 
+            WHERE comcode = ? 
+            `,
+            [comcode]
+        );
+        return result;
+    }
+
+    async GetPinkfromByNull(comcode: string): Promise<string> {
+        const result = await this.pinkformRepository.query(
+            `
+            SELECT startno 
+            FROM _companypink 
+            WHERE comcode = ? 
+            `,
+            [comcode]
+        );
+        return result;
+    }
 }
