@@ -32,7 +32,7 @@ export class EinvController {
             throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @Patch('ChangeEinv/:comcode/:refno/:invno/:itemnoold/:itemnonew')
     async IChangeHinv(
         @Param('comcode') comcode: string,
@@ -42,10 +42,10 @@ export class EinvController {
         @Param('itemnonew') itemnonew: string
     ) {
         try {
-            const res = await this.einvService.GetEinvByOne(comcode, refno, invno, itemnoold);
-            if(res == null){
-                const res = await this.einvService.UpdatePinkEinvByOne(comcode, refno, invno, itemnoold , itemnonew);
-            }else{
+            const res = await this.einvService.GetEinvByOne(comcode, refno, invno, itemnonew);
+            if (res == null) {
+                const res = await this.einvService.UpdatePinkEinvByOne(comcode, refno, invno, itemnoold, itemnonew);
+            } else {
                 throw new HttpException('รายการซ้ำ', HttpStatus.NOT_FOUND);
             }
             return res;

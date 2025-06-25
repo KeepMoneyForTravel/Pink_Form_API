@@ -10,7 +10,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('API DDC.PINK.FROM')
     .setDescription('BY Meiosys')
-    .setVersion('2.6')
+    .setVersion('2.7')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
