@@ -80,14 +80,19 @@ export class PinkfromController {
     @Patch('Copypinkfrom/:refno/:comcode/:usr')
     async ICopypinkfrom(@Param('refno') refno: string, @Param('comcode') comcode: string, @Param('usr') usr: string) {
         try {
-            const res = await this.pinkfromService.GetpinkfromDesc(comcode);
+            let res = await this.pinkfromService.GetpinkfromDesc(comcode);
+            let resa: string;
+            if (res == null) {
+                resa = await this.pinkfromService.GetpinkfromDesc(comcode);
+            } else {
+                const prefix = res.slice(0, 4);
+                const numericPart = res.slice(4);
+                const incrementedNumber = (parseInt(numericPart) + 1).toString().padStart(numericPart.length, '0');
+                resa = prefix + incrementedNumber;
+            }
             const foundPinkfrom = await this.pinkfromService.getPinkfromByOne(comcode, refno);
             const foundPinkHinv = await this.hinvService.getPinkHinvfromByOne(comcode, refno);
             const foundPinkEinv = await this.einvService.GetPinkEinvbyone(comcode, refno);
-            const prefix = res.slice(0, 4);
-            const numericPart = res.slice(4);
-            const incrementedNumber = (parseInt(numericPart) + 1).toString().padStart(numericPart.length, '0');
-            const resa = prefix + incrementedNumber;
             const pinkform = foundPinkfrom
             const pinkhinv = foundPinkHinv
             pinkform.comcode = comcode

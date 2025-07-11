@@ -53,6 +53,19 @@ export class PinkfromService {
         );
         return result[0]?.refno || null;
     }
+
+    async Getrefid(comcode: string): Promise<string> {
+        const result = await this.pinkformRepository.query(
+            `
+            SELECT CONCAT(refid, startno) AS refid
+            FROM _companypink
+            WHERE comcode = ?
+            LIMIT 1;
+            `,
+            [comcode]
+        );
+        return result[0]?.refno || null;
+    }
     async insertPinkfrom(obj: Pinkform): Promise<Pinkform> {
         try {
             const newPinkform = this.pinkformRepository.create(obj);
