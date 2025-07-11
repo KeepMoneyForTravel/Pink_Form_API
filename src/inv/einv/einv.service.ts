@@ -28,6 +28,25 @@ export class EinvService {
       throw new Error(error.message);
     }
   }
+
+  async GetPinkEinvbyoneNoComp(refno: string): Promise<PinkEinv[]> {
+    try {
+      const foundPinkEinv = await this.einvRepository.find({
+        where: {
+          refno: refno,
+        },
+      });
+
+      if (!foundPinkEinv) {
+        return [];
+      }
+
+      return foundPinkEinv || [];
+    } catch (error) {
+      console.error('Error fetching PinkEinv:', error);
+      throw new Error(error.message);
+    }
+  }
   async getEinvByOneItem(obj: PinkEinv): Promise<PinkEinv> {
     try {
       const comcode = obj.comcode

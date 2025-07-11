@@ -90,9 +90,9 @@ export class PinkfromController {
                 const incrementedNumber = (parseInt(numericPart) + 1).toString().padStart(numericPart.length, '0');
                 resa = prefix + incrementedNumber;
             }
-            const foundPinkfrom = await this.pinkfromService.getPinkfromByOne(comcode, refno);
-            const foundPinkHinv = await this.hinvService.getPinkHinvfromByOne(comcode, refno);
-            const foundPinkEinv = await this.einvService.GetPinkEinvbyone(comcode, refno);
+            const foundPinkfrom = await this.pinkfromService.getPinkfromByOneNoComp(refno);
+            const foundPinkHinv = await this.hinvService.getPinkHinvfromByOneNoComp(refno);
+            const foundPinkEinv = await this.einvService.GetPinkEinvbyoneNoComp(refno);
             const pinkform = foundPinkfrom
             const pinkhinv = foundPinkHinv
             pinkform.comcode = comcode

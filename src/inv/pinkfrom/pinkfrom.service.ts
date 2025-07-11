@@ -94,6 +94,24 @@ export class PinkfromService {
         }
     }
 
+    async getPinkfromByOneNoComp(refno: string): Promise<Pinkform> {
+        try {
+            const foundPinkform = await this.pinkformRepository.findOne({
+                where: {
+                    refno: refno,
+                },
+            });
+            console.log(foundPinkform);
+            if (!foundPinkform) {
+                return null
+            }
+            return foundPinkform;
+        } catch (error) {
+            console.error('Error fetching pinkform:', error);
+            throw new Error(error.message);
+        }
+    }
+
     async GetPinkbyone(comcode: string, refno: string): Promise<Pinkform | null> {
         try {
             const foundPinkform = await this.pinkformRepository.findOne({

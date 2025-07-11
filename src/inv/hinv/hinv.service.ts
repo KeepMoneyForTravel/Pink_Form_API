@@ -27,6 +27,23 @@ export class HinvService {
         }
     }
 
+    async getPinkHinvfromByOneNoComp(refno: string): Promise<PinkHinv> {
+        try {
+            const foundPinkHinv = await this.hinvRepository.findOne({
+                where: {
+                    refno: refno
+                },
+            });
+            if (!foundPinkHinv) {
+                return null
+            }
+            return foundPinkHinv;
+        } catch (error) {
+            console.error('Error fetching pinkHinv:', error);
+            throw new Error(error.message);
+        }
+    }
+
     async insertPinkHinv(obj: PinkHinv): Promise<PinkHinv> {
         try {
             const foundPinkHinv = this.hinvRepository.create(obj);
