@@ -105,19 +105,17 @@ export class PinkfromController {
             const dateStr = now.toISOString().split('T')[0].replace(/-/g, '');
             const timeStr = now.toTimeString().split(' ')[0];
 
-            pinkform = {
-                ...foundPinkfrom,
-                comcode,
-                refno: resa,
-                refdd: dateStr,
-                status: '',
-                update_tt: timeStr,
-                usr_create: usr,
-                usr_create_dd: dateStr,
-                usr_create_tt: timeStr,
-                usrname: usr,
-                update_dd: dateStr
-            };
+
+            foundPinkfrom.comcode = comcode;
+            foundPinkfrom.refno = resa;
+            foundPinkfrom.refdd = dateStr;
+            foundPinkfrom.status = '';
+            foundPinkfrom.update_tt = timeStr;
+            foundPinkfrom.usr_create = usr;
+            foundPinkfrom.usr_create_dd = dateStr;
+            foundPinkfrom.usr_create_tt = timeStr;
+            foundPinkfrom.usrname = usr;
+            foundPinkfrom.update_dd = dateStr;
 
             // 4. Update pinkEinv
             const updatedEinv = foundPinkEinv.map(item => ({
@@ -129,7 +127,7 @@ export class PinkfromController {
             }));
 
             // 5. Save pinkform
-            const resinsert = await this.pinkfromService.insertPinkfrom(pinkform);
+            const resinsert = await this.pinkfromService.insertPinkfrom(foundPinkfrom);
 
             // 6. Save hinv if exists
             let resinserthinv: any[] = [];
@@ -161,11 +159,8 @@ export class PinkfromController {
             };
 
         } catch (error) {
-            return {
-                pinkform: pinkform,
-                pinkHinv: [],
-                pinkEinv: []
-            };
+            console.error('Error Not Found', error);
+            throw new HttpException('Error Not Found: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
