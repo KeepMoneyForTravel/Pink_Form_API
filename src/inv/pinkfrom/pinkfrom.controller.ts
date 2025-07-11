@@ -83,7 +83,7 @@ export class PinkfromController {
             let res = await this.pinkfromService.GetpinkfromDesc(comcode);
             let resa: string;
             if (res == null) {
-                resa = await this.pinkfromService.GetpinkfromDesc(comcode);
+                resa = await this.pinkfromService.Getrefid(comcode);
             } else {
                 const prefix = res.slice(0, 4);
                 const numericPart = res.slice(4);
