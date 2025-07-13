@@ -215,11 +215,11 @@ export class PinkfromController {
         return await this.hinvService.deleteHinv(comcode, refno, invno);
     }
 
-    @Patch('CopyChangeInv/:comcode/:refnoold/:refnonew/:invnoold/:invnonew/:usr')
+    @Patch('CopyChangeInv/:comcode/:refnonew/:refnoold/:invnoold/:invnonew/:usr')
     async ICopyChangeInv(
         @Param('comcode') comcode: string,
-        @Param('refnoold') refnoold: string,
         @Param('refnonew') refnonew: string,
+        @Param('refnoold') refnoold: string,
         @Param('invnoold') invnoold: string,
         @Param('invnonew') invnonew: string,
         @Param('usr') usr: string,
