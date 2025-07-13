@@ -154,4 +154,23 @@ export class EinvService {
       throw new Error(error.message);
     }
   }
+
+  async ChangeEinv(comcode: string, refno: string, invnoold: string, invnonew: string): Promise<PinkEinv[]> {
+    try {
+      const updatedRecords = await this.einvRepository.update(
+        {
+          comcode: comcode,
+          refno: refno,
+          invno: invnoold
+        },
+        {
+          invno: invnonew,
+        }
+      );
+      return []
+    } catch (error) {
+      console.error('Error fetching pinkHinv:', error);
+      throw new Error(error.message);
+    }
+  }
 }

@@ -190,6 +190,7 @@ export class PinkfromController {
     ) {
         try {
             const res = await this.hinvService.ChangeHinv(comcode, refno, invnoold, invnonew);
+            const res2 = await this.einvService.ChangeEinv(comcode, refno, invnoold, invnonew);
             return res;
 
         } catch (error) {
