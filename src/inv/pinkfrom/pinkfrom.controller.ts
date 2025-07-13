@@ -83,14 +83,14 @@ export class PinkfromController {
 
         try {
             const lastRef = await this.pinkfromService.GetpinkfromDesc(comcode);
-            let resa: string;
-            if (!lastRef) {
-                resa = await this.pinkfromService.Getrefid(comcode); // initial value
-            } else {
+            let resa: string = '';
+            if (lastRef) {
                 const prefix = lastRef.slice(0, 4);
                 const numericPart = lastRef.slice(4);
                 const incrementedNumber = (parseInt(numericPart) + 1).toString().padStart(numericPart.length, '0');
                 resa = prefix + incrementedNumber;
+            } else {
+                resa = await this.pinkfromService.Getrefid(comcode);
             }
             return { newRef: resa };
             // const foundPinkfrom = await this.pinkfromService.getPinkfromByOneNoComp(refno);
