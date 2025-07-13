@@ -83,17 +83,16 @@ export class PinkfromController {
 
         try {
             const lastRef = await this.pinkfromService.GetpinkfromDesc(comcode);
-            return lastRef;
-            // let resa: string;
-
-            // if (!lastRef) {
-            //     resa = await this.pinkfromService.Getrefid(comcode); // initial value
-            // } else {
-            //     const prefix = lastRef.slice(0, 4);
-            //     const numericPart = lastRef.slice(4);
-            //     const incrementedNumber = (parseInt(numericPart) + 1).toString().padStart(numericPart.length, '0');
-            //     resa = prefix + incrementedNumber;
-            // }
+            let resa: string;
+            if (!lastRef) {
+                resa = await this.pinkfromService.Getrefid(comcode); // initial value
+            } else {
+                const prefix = lastRef.slice(0, 4);
+                const numericPart = lastRef.slice(4);
+                const incrementedNumber = (parseInt(numericPart) + 1).toString().padStart(numericPart.length, '0');
+                resa = prefix + incrementedNumber;
+            }
+            return resa;
             // const foundPinkfrom = await this.pinkfromService.getPinkfromByOneNoComp(refno);
             // const foundPinkHinv = await this.hinvService.getPinkHinvfromByOneNoComp(refno);
             // const foundPinkEinv = await this.einvService.GetPinkEinvbyoneNoComp(refno);
