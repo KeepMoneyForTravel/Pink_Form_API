@@ -92,7 +92,7 @@ export class PinkfromController {
                 const incrementedNumber = (parseInt(numericPart) + 1).toString().padStart(numericPart.length, '0');
                 resa = prefix + incrementedNumber;
             }
-            return resa;
+            return { newRef: resa };
             // const foundPinkfrom = await this.pinkfromService.getPinkfromByOneNoComp(refno);
             // const foundPinkHinv = await this.hinvService.getPinkHinvfromByOneNoComp(refno);
             // const foundPinkEinv = await this.einvService.GetPinkEinvbyoneNoComp(refno);
