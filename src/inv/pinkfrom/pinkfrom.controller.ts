@@ -226,6 +226,7 @@ export class PinkfromController {
         @Body() body: string[]
     ) {
         try {
+            const foundPinkfrom = await this.pinkfromService.getPinkfromByOneNoComp(refnonew);
             const foundPinkHinv = await this.hinvService.getPinkHinvfromByOneNoComp(refnoold);
             const now = new Date();
             const dateStr = now.toISOString().split('T')[0].replace(/-/g, '');
@@ -258,6 +259,7 @@ export class PinkfromController {
                 }
             }
             return {
+                pinkform: foundPinkfrom,
                 pinkHinv: resinserthinv,
                 pinkEinv: newInsertedList
             };
