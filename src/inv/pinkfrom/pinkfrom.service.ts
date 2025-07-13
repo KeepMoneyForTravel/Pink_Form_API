@@ -64,7 +64,7 @@ export class PinkfromService {
             `,
             [comcode]
         );
-        return result[0]?.refno || null;
+        return result[0]?.refid || null;
     }
     async insertPinkfrom(obj: Pinkform): Promise<Pinkform> {
         try {
