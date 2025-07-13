@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PinkEinv } from 'src/entity/inv/einv.entity';
 import { Repository } from 'typeorm';
+import { In } from 'typeorm';
 
 @Injectable()
 export class EinvService {
@@ -47,6 +48,27 @@ export class EinvService {
       throw new Error(error.message);
     }
   }
+
+  async GetPinkEinvbyoneNoCompAndList(refno: string, list: string[]): Promise<PinkEinv[]> {
+    try {
+      const foundPinkEinv = await this.einvRepository.find({
+        where: {
+          refno: refno,
+          itemno: In(list),
+        },
+      });
+
+      if (!foundPinkEinv) {
+        return [];
+      }
+
+      return foundPinkEinv || [];
+    } catch (error) {
+      console.error('Error fetching PinkEinv:', error);
+      throw new Error(error.message);
+    }
+  }
+
   async getEinvByOneItem(obj: PinkEinv): Promise<PinkEinv> {
     try {
       const comcode = obj.comcode
