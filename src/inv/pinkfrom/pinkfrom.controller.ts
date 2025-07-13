@@ -91,7 +91,8 @@ export class PinkfromController {
                 // resa = prefix + incrementedNumber;
                 resa = 'asdadasdsdsdsadasd'
             } else {
-                resa = await this.pinkfromService.Getrefid(comcode);
+                //resa = await this.pinkfromService.Getrefid(comcode);
+                resa = 'asdadasdsdsdsadasd'
             }
             return { newRef: resa, last: lastRef };
             // const foundPinkfrom = await this.pinkfromService.getPinkfromByOneNoComp(refno);
