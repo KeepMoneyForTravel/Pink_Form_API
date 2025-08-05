@@ -171,4 +171,32 @@ export class PinkfromService {
         );
         return result;
     }
+
+    async GetExportCertificateData(refno: string): Promise<any[]> {
+        const query = `
+            SELECT j.comcode,j.refno,j.certno,j.com_name,j.com_code,
+                   j.com_addr1,j.com_addr2,j.com_addr3,j.com_addr4,j.com_cntrycode,j.com_zipcode,j.com_unstruc,
+                   (SELECT name FROM country WHERE code=j.com_cntrycode) AS com_cntryname,
+                   j.cn_code,j.cn_name,j.cn_addr1,j.cn_addr2,j.cn_addr3,j.cn_addr4,j.cn_cntrycode,j.cn_zipcode,j.cn_unstruc,
+                   (SELECT name FROM country WHERE code=j.cn_cntrycode) AS cn_cntryname,
+                   j.transmode,j.departdd,j.dischargeport,j.approve_dd,j.remark1,
+                   (SELECT portname FROM port WHERE isocode=j.dischargeport) AS portname,
+                   (SELECT cntrycode FROM port WHERE isocode=j.dischargeport) AS port_cntrycode,
+                   (SELECT name FROM country WHERE code=SUBSTRING(j.dischargeport,1,2)) AS port_cntryname,
+                   h.invno,h.invdate,e.itemno,e.descen,e.qty,e.qtyunit_name,e.pkgcode,
+                   e.pd_district,e.pd_subprov,e.pd_prov,e.prod_date,e.pd_provc,e.pd_subprovc,e.pd_districtc,
+                   (SELECT nameth FROM district WHERE code=e.pd_districtc) AS district_nameth,
+                   (SELECT nameth FROM subprovince WHERE code=e.pd_subprovc) AS subprovince_nameth,
+                   (SELECT desc1 FROM province WHERE provcode=e.pd_provc) AS province_nameth,
+                   e.exp_date,j.ready_dd,
+                   e.descth,e.qty_text,e.pkg_text 
+            FROM pinkform as j 
+            LEFT OUTER JOIN pink_hinv as h on j.comcode = h.comcode AND j.refno = h.refno 
+            LEFT OUTER JOIN pink_einv as e on h.comcode = e.comcode AND h.refno = e.refno AND h.invno=e.invno 
+            WHERE j.refno = ?
+        `;
+
+        const result = await this.pinkformRepository.query(query, [refno]);
+        return result;
+    }
 }

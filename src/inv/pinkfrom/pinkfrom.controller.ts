@@ -7,6 +7,7 @@ import { PinkfromHeadReq, PinkHinv } from 'src/entity/inv/hinv.entity';
 import { EinvService } from '../einv/einv.service';
 import { UserService } from 'src/user/user.service';
 import e from 'express';
+import { ExportCertificateDto } from 'src/entity/report.entity';
 
 @ApiTags('INV')
 @Controller('pinkfrom')
@@ -269,6 +270,74 @@ export class PinkfromController {
             throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Get('ReportDraft/:refno')
+    async IReportDraft(@Param('refno') refno: string) {
+        try {
+            const data = await this.pinkfromService.GetExportCertificateData(refno);
+
+            if (!data || data.length === 0) {
+                throw new HttpException('No data found for the given reference number', HttpStatus.NOT_FOUND);
+            }
+
+            const firstRecord = data[0];
+            const res = new ExportCertificateDto();
+
+            // Certificate Information
+            res.certificate = {
+                certno: firstRecord.certno || '',
+                refno: firstRecord.refno || ''
+            };
+
+            // Exporter Information
+            res.exporter = {
+                name: firstRecord.com_name || '',
+                add1: firstRecord.com_addr1 || '',
+                add2: firstRecord.com_addr2 || '',
+                add3: firstRecord.com_addr3 || '',
+                add4: firstRecord.com_addr4 || '',
+                zipcode: firstRecord.com_zipcode || '',
+                entryname: firstRecord.com_cntryname || '',
+                unsture: firstRecord.com_unstruc || ''
+            };
+
+            // Products Information
+            res.products = data.map(item => ({
+                descen: item.descen || '',
+                qty: item.qty || 0,
+                qtyunit_name: item.qtyunit_name || '',
+                pd_district: item.district_nameth || item.pd_district || '',
+                pd_subprov: item.subprovince_nameth || item.pd_subprov || ''
+            })).filter(product => product.descen); // Filter out empty products
+
+            // Transport Information
+            res.transport = {
+                transmode: firstRecord.transmode || '',
+                dep: firstRecord.departdd ? new Date(firstRecord.departdd) : null,
+                portname: firstRecord.portname || '',
+                port_entryname: firstRecord.port_cntryname || ''
+            };
+
+            // Certification Information
+            res.certification = {
+                approve_d: firstRecord.approve_dd ? new Date(firstRecord.approve_dd) : null,
+                ready_d: firstRecord.ready_dd ? new Date(firstRecord.ready_dd) : null
+            };
+
+            // Invoice Information
+            res.invoice = {
+                invno: firstRecord.invno || '',
+                remark: firstRecord.remark1 || ''
+            };
+
+            return res;
+
+        } catch (error) {
+            console.error('Error Not Found', error);
+            throw new HttpException('Error Not Found ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 
 
