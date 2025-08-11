@@ -321,21 +321,24 @@ export class PinkfromController {
                 pd_district: item.pd_district || '',
                 pd_subprov: item.pd_subprov || '',
                 pd_provc: item.pd_provc || '',
-                pd_prov: item.pd_prov || ''
+                pd_prov: item.pd_prov || '',
+                pkgcode: item.pkgcode || '',
+                prod_date: item.prod_date || '',
+                exp_date: item.exp_date || ''
             })).filter(product => product.descen); // Filter out empty products
 
             // Transport Information
             res.transport = {
                 transmode: firstRecord.transmode || '',
-                dep: firstRecord.departdd ? new Date(firstRecord.departdd) : null,
+                dep: firstRecord.departdd || '',
                 portname: firstRecord.portname || '',
                 port_entryname: firstRecord.port_cntryname || ''
             };
 
             // Certification Information
             res.certification = {
-                approve_d: firstRecord.approve_dd ? new Date(firstRecord.approve_dd) : null,
-                ready_d: firstRecord.ready_dd ? new Date(firstRecord.ready_dd) : null
+                approve_d: firstRecord.approve_dd || '',
+                ready_d: firstRecord.ready_dd || ''
             };
 
             // Invoice Information

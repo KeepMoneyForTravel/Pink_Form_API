@@ -23,18 +23,21 @@ export class ProductDto {
     pd_subprov: string;
     pd_provc: string;
     pd_prov: string;
+    pkgcode: string;
+    prod_date: string;
+    exp_date: string;
 }
 
 export class TransportDto {
     transmode: string;
-    dep: Date;
+    dep: string;
     portname: string;
     port_entryname: string;
 }
 
 export class CertificationDto {
-    approve_d: Date;
-    ready_d: Date;
+    approve_d: string;
+    ready_d: string;
 }
 
 export class InvoiceDto {
