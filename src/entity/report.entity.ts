@@ -22,6 +22,7 @@ export class ProductDto {
     pd_district: string;
     pd_subprov: string;
     pd_provc: string;
+    pd_prov: string;
 }
 
 export class TransportDto {
