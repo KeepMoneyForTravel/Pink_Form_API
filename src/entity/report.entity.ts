@@ -26,6 +26,12 @@ export class ProductDto {
     pkgcode: string;
     prod_date: string;
     exp_date: string;
+    district_nameth: string;
+    subprovince_nameth: string;
+    province_nameth: string;
+    qty_text: string;
+    pkg_text: string;
+    descth: string;
 }
 
 export class TransportDto {

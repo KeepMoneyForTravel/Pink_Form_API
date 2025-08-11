@@ -324,7 +324,13 @@ export class PinkfromController {
                 pd_prov: item.pd_prov || '',
                 pkgcode: item.pkgcode || '',
                 prod_date: item.prod_date || '',
-                exp_date: item.exp_date || ''
+                exp_date: item.exp_date || '',
+                district_nameth: item.district_nameth || '',
+                subprovince_nameth: item.subprovince_nameth || '',
+                province_nameth: item.province_nameth || '',
+                qty_text: item.qty_text || '',
+                pkg_text: item.pkg_text || '',
+                descth: item.descth || ''
             })).filter(product => product.descen); // Filter out empty products
 
             // Transport Information
