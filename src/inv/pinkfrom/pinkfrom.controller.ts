@@ -318,9 +318,9 @@ export class PinkfromController {
                 descen: item.descen || '',
                 qty: item.qty || 0,
                 qtyunit_name: item.qtyunit_name || '',
-                pd_district: item.district_nameth || item.pd_district || '',
-                pd_subprov: item.subprovince_nameth || item.pd_subprov || '',
-                pd_provc: item.province_nameth || item.pd_provc || ''
+                pd_district: item.pd_district || '',
+                pd_subprov: item.pd_subprov || '',
+                pd_provc: item.pd_provc || ''
             })).filter(product => product.descen); // Filter out empty products
 
             // Transport Information
