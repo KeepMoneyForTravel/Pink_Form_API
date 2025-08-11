@@ -320,7 +320,8 @@ export class PinkfromController {
                 qtyunit_name: item.qtyunit_name || '',
                 pd_district: item.pd_district || '',
                 pd_subprov: item.pd_subprov || '',
-                pd_provc: item.pd_provc || ''
+                pd_provc: item.pd_provc || '',
+                pd_prov: item.pd_prov || ''
             })).filter(product => product.descen); // Filter out empty products
 
             // Transport Information
