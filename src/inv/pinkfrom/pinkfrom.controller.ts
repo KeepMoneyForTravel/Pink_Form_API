@@ -289,6 +289,18 @@ export class PinkfromController {
                 refno: firstRecord.refno || ''
             };
 
+            res.consignee = {
+                cn_code: firstRecord.cn_code || '',
+                cn_name: firstRecord.cn_name || '',
+                cn_addr1: firstRecord.cn_addr1 || '',
+                cn_addr2: firstRecord.cn_addr2 || '',
+                cn_addr3: firstRecord.cn_addr3 || '',
+                cn_addr4: firstRecord.cn_addr4 || '',
+                cn_cntrycode: firstRecord.cn_cntrycode || '',
+                cn_zipcode: firstRecord.cn_zipcode || '',
+                cn_unstruc: firstRecord.cn_unstruc || ''
+            };
+
             // Exporter Information
             res.exporter = {
                 name: firstRecord.com_name || '',
@@ -307,7 +319,8 @@ export class PinkfromController {
                 qty: item.qty || 0,
                 qtyunit_name: item.qtyunit_name || '',
                 pd_district: item.district_nameth || item.pd_district || '',
-                pd_subprov: item.subprovince_nameth || item.pd_subprov || ''
+                pd_subprov: item.subprovince_nameth || item.pd_subprov || '',
+                pd_provc: item.province_nameth || item.pd_provc || ''
             })).filter(product => product.descen); // Filter out empty products
 
             // Transport Information

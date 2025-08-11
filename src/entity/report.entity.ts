@@ -1,3 +1,4 @@
+import { Consignee } from './consignee.entity';
 export class CertificateInfoDto {
     certno: string;
     refno: string;
@@ -20,6 +21,7 @@ export class ProductDto {
     qtyunit_name: string;
     pd_district: string;
     pd_subprov: string;
+    pd_provc: string;
 }
 
 export class TransportDto {
@@ -41,9 +43,22 @@ export class InvoiceDto {
 
 export class ExportCertificateDto {
     certificate: CertificateInfoDto;
+    consignee: Consignee_r;
     exporter: ExporterDto;
     products: ProductDto[];
     transport: TransportDto;
     certification: CertificationDto;
     invoice: InvoiceDto;
+}
+
+export class Consignee_r {
+    cn_code: string;
+    cn_name: string;
+    cn_addr1: string;
+    cn_addr2: string;
+    cn_addr3: string;
+    cn_addr4: string;
+    cn_cntrycode: string;
+    cn_zipcode: string;
+    cn_unstruc: string;
 }
