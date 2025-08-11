@@ -282,6 +282,13 @@ export class PinkfromController {
 
             const firstRecord = data[0];
             const res = new ExportCertificateDto();
+            const formatDate = (dateStr) => {
+                if (!dateStr || dateStr.length !== 8) return '';
+                const year = dateStr.substring(0, 4);
+                const month = dateStr.substring(4, 6);
+                const day = dateStr.substring(6, 8);
+                return `${day}/${month}/${year}`;
+            };
 
             // Certificate Information
             res.certificate = {
@@ -323,8 +330,8 @@ export class PinkfromController {
                 pd_provc: item.pd_provc || '',
                 pd_prov: item.pd_prov || '',
                 pkgcode: item.pkgcode || '',
-                prod_date: item.prod_date || '',
-                exp_date: item.exp_date || '',
+                prod_date: formatDate(item.prod_date || ''),
+                exp_date: formatDate(item.exp_date || ''),
                 district_nameth: item.district_nameth || '',
                 subprovince_nameth: item.subprovince_nameth || '',
                 province_nameth: item.province_nameth || '',
@@ -343,8 +350,8 @@ export class PinkfromController {
 
             // Certification Information
             res.certification = {
-                approve_d: firstRecord.approve_dd || '',
-                ready_d: firstRecord.ready_dd || ''
+                approve_d: formatDate(firstRecord.approve_dd || ''),
+                ready_d: formatDate(firstRecord.ready_dd || '')
             };
 
             // Invoice Information
