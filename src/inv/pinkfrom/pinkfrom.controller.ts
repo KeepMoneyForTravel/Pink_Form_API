@@ -290,6 +290,18 @@ export class PinkfromController {
                 return `${day}/${month}/${year}`;
             };
 
+            const formatDateText = (dateStr: string): string => {
+                if (!dateStr || dateStr.length !== 8) return '';
+                const year = dateStr.substring(0, 4);
+                const month = parseInt(dateStr.substring(4, 6), 10);
+                const day = dateStr.substring(6, 8);
+
+                const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+                    "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+                return `${day} ${monthNames[month - 1]} ${year}`;
+            };
+
             // Certificate Information
             res.certificate = {
                 certno: firstRecord.certno || '',
@@ -343,14 +355,14 @@ export class PinkfromController {
             // Transport Information
             res.transport = {
                 transmode: firstRecord.transmode || '',
-                dep: firstRecord.departdd || '',
+                dep: formatDate(firstRecord.departdd || ''),
                 portname: firstRecord.portname || '',
                 port_entryname: firstRecord.port_cntryname || ''
             };
 
             // Certification Information
             res.certification = {
-                approve_d: formatDate(firstRecord.approve_dd || ''),
+                approve_d: formatDateText(firstRecord.approve_dd || ''),
                 ready_d: formatDate(firstRecord.ready_dd || '')
             };
 
