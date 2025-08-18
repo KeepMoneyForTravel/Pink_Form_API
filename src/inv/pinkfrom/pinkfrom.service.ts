@@ -18,26 +18,68 @@ export class PinkfromService {
             .getRawMany();
     }
     async GetPinkform(obj: PinkfromReq): Promise<Pinkform[] | []> {
-        if (obj.comcode != null && obj.refddfrom != null) {
-            this.headpink = await this.pinkformRepository.find(
-                {
-                    where: {
-                        refdd: Between(obj.refddfrom, obj.refddto),
-                        comcode: obj.comcode
+        if (obj.user == 'all') {
+            if (obj.searchall == '0') {
+                this.headpink = await this.pinkformRepository.find(
+                    {
+                        where: {
+                            refdd: Between(obj.refddfrom, obj.refddto),
+                            comcode: obj.comcode
+                        }
                     }
-                }
-            );
-        } else if (obj.comcode == null && obj.refddfrom != null) {
-            this.headpink = await this.pinkformRepository.find(
-                {
-                    where: {
-                        refdd: Between(obj.refddfrom, obj.refddto)
+                );
+            } else {
+                this.headpink = await this.pinkformRepository.find(
+                    {
+                        where: {
+                            comcode: obj.comcode
+                        }
                     }
-                }
-            );
+                );
+            }
+
         } else {
-            this.headpink = await this.pinkformRepository.find()
+            if (obj.searchall == '0') {
+                this.headpink = await this.pinkformRepository.find(
+                    {
+                        where: {
+                            refdd: Between(obj.refddfrom, obj.refddto),
+                            comcode: obj.comcode,
+                            usr_create: obj.user
+                        }
+                    }
+                );
+            } else {
+                this.headpink = await this.pinkformRepository.find(
+                    {
+                        where: {
+                            comcode: obj.comcode,
+                            usr_create: obj.user
+                        }
+                    }
+                );
+            }
         }
+        // if (obj.comcode != null && obj.refddfrom != null) {
+        //     this.headpink = await this.pinkformRepository.find(
+        //         {
+        //             where: {
+        //                 refdd: Between(obj.refddfrom, obj.refddto),
+        //                 comcode: obj.comcode
+        //             }
+        //         }
+        //     );
+        // } else if (obj.comcode == null && obj.refddfrom != null) {
+        //     this.headpink = await this.pinkformRepository.find(
+        //         {
+        //             where: {
+        //                 refdd: Between(obj.refddfrom, obj.refddto)
+        //             }
+        //         }
+        //     );
+        // } else {
+        //     this.headpink = await this.pinkformRepository.find()
+        // }
         return this.headpink
     }
     async GetpinkfromDesc(comcode: string): Promise<string> {

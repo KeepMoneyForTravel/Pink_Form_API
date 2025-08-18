@@ -429,6 +429,16 @@ export class PinkfromReq {
   @IsString()
   @IsOptional()
   refddto?: string | null;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  user?: string | null;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  searchall?: string | null;
 }
 
 
