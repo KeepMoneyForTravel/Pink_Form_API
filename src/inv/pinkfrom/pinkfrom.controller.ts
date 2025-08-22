@@ -402,10 +402,11 @@ export class PinkfromController {
 
 
     @Post('run-query')
-    async runQuery(@Body('sql') sql: string) {
+    async runQuery(@Body() body: any) {
         try {
+            const sql = (typeof body === 'string') ? body : (body?.query || body?.sql);
             if (!sql) {
-                throw new HttpException('sql required', HttpStatus.BAD_REQUEST);
+                throw new HttpException('query required', HttpStatus.BAD_REQUEST);
             }
             const rows = await this.pinkfromService.RunSafeSelect(sql);
             return { rows, count: rows.length };

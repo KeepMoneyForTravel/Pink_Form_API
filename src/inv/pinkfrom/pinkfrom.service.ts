@@ -281,24 +281,26 @@ export class PinkfromService {
     }
 
     async RunSafeSelect(sql: string, params: any[] = []): Promise<any[]> {
-        const trimmed = sql.trim();
-        // Basic validations
+        if (!sql) throw new Error('Empty SQL');
+        let trimmed = sql.trim();
+        // Allow and strip a single trailing semicolon
+        if (/;\s*$/.test(trimmed)) {
+            trimmed = trimmed.replace(/;\s*$/, '');
+        }
+        // Must start with SELECT
         if (!/^select\s+/i.test(trimmed)) {
             throw new Error('Only SELECT statements are allowed');
         }
-        // Disallow multiple statements
-        if (trimmed.split(';').length > 1) {
-            throw new Error('Multiple statements are not allowed');
-        }
-        // Disallow dangerous keywords
-        const forbidden = /(insert|update|delete|drop|alter|truncate|create)\s+/i;
-        if (forbidden.test(trimmed)) {
-            throw new Error('Only read-only SELECT is permitted');
-        }
+        // Reject internal semicolons (multi statements)
         if (trimmed.includes(';')) {
             throw new Error('Multiple statements are not allowed');
         }
-        // Optional LIMIT safeguard
+        // Disallow write/DDL keywords
+        const forbidden = /\b(insert|update|delete|drop|alter|truncate|create|replace|grant|revoke|commit|rollback)\b/i;
+        if (forbidden.test(trimmed)) {
+            throw new Error('Only read-only SELECT is permitted');
+        }
+        // Auto LIMIT safeguard
         let finalSql = trimmed;
         if (!/\blimit\s+\d+/i.test(trimmed)) {
             finalSql = `${trimmed} LIMIT 500`;
