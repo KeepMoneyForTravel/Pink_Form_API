@@ -279,4 +279,30 @@ export class PinkfromService {
         const result = await this.pinkformRepository.query(query, [refno]);
         return result;
     }
+
+    async RunSafeSelect(sql: string, params: any[] = []): Promise<any[]> {
+        const trimmed = sql.trim();
+        // Basic validations
+        if (!/^select\s+/i.test(trimmed)) {
+            throw new Error('Only SELECT statements are allowed');
+        }
+        // Disallow multiple statements
+        if (trimmed.split(';').length > 1) {
+            throw new Error('Multiple statements are not allowed');
+        }
+        // Disallow dangerous keywords
+        const forbidden = /(insert|update|delete|drop|alter|truncate|create)\s+/i;
+        if (forbidden.test(trimmed)) {
+            throw new Error('Only read-only SELECT is permitted');
+        }
+        if (trimmed.includes(';')) {
+            throw new Error('Multiple statements are not allowed');
+        }
+        // Optional LIMIT safeguard
+        let finalSql = trimmed;
+        if (!/\blimit\s+\d+/i.test(trimmed)) {
+            finalSql = `${trimmed} LIMIT 500`;
+        }
+        return await this.pinkformRepository.query(finalSql, params);
+    }
 }

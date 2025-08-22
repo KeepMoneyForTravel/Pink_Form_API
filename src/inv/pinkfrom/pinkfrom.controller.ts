@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PinkfromService } from './pinkfrom.service';
 import { InvRes, Pinkform, PinkfromReq } from 'src/entity/inv/pinkfrom.entity';
@@ -48,11 +48,16 @@ export class PinkfromController {
     @Patch('Newpinkfrom/:comcode/:usr')
     async INewpinkfrom(@Param('comcode') comcode: string, @Param('usr') usr: string) {
         try {
-            const res = await this.pinkfromService.GetpinkfromDesc(comcode);
-            const prefix = res.slice(0, 4);
-            const numericPart = res.slice(4);
-            const incrementedNumber = (parseInt(numericPart) + 1).toString().padStart(numericPart.length, '0');
-            const resa = prefix + incrementedNumber;
+            const lastRef = await this.pinkfromService.GetpinkfromDesc(comcode);
+            let resa: string = '';
+            if (lastRef) {
+                const prefix = lastRef.slice(0, 4);
+                const numericPart = lastRef.slice(4);
+                const incrementedNumber = (parseInt(numericPart) + 1).toString().padStart(numericPart.length, '0');
+                resa = prefix + incrementedNumber;
+            } else {
+                resa = await this.pinkfromService.Getrefid(comcode);
+            }
             const pinkform = new Pinkform();
             const pinkhinv = new PinkHinv();
             pinkform.comcode = comcode
@@ -132,6 +137,21 @@ export class PinkfromController {
             foundPinkfrom.refno = resa;
             foundPinkfrom.refdd = dateStr;
             foundPinkfrom.status = '';
+            foundPinkfrom.status2 = '';
+            foundPinkfrom.rcvno = '';
+            foundPinkfrom.certno = '';
+            foundPinkfrom.queue_dd = '';
+            foundPinkfrom.queue_tt = '';
+            foundPinkfrom.approve_dd = '';
+            foundPinkfrom.approve_tt = '';
+            foundPinkfrom.ready_dd = '';
+            foundPinkfrom.ready_tt = '';
+            foundPinkfrom.link_billpay = '';
+            foundPinkfrom.datetrans0 = '';
+            foundPinkfrom.timetrans0 = '';
+            foundPinkfrom.datexml = '';
+            foundPinkfrom.timexml = '';
+            foundPinkfrom.cusres_msg = '';
             foundPinkfrom.update_tt = timeStr;
             foundPinkfrom.usr_create = usr;
             foundPinkfrom.usr_create_dd = dateStr;
@@ -381,7 +401,18 @@ export class PinkfromController {
     }
 
 
-
+    @Post('run-query')
+    async runQuery(@Body('sql') sql: string) {
+        try {
+            if (!sql) {
+                throw new HttpException('sql required', HttpStatus.BAD_REQUEST);
+            }
+            const rows = await this.pinkfromService.RunSafeSelect(sql);
+            return { rows, count: rows.length };
+        } catch (error) {
+            throw new HttpException('Query error: ' + error.message, HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
 }
